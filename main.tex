@@ -1,0 +1,1505 @@
+% !TeX program = pdflatex
+% English manuscript prepared with Elsevier's elsarticle class.
+% Compile normally for the single-column typeset version.
+% Define \ReviewVersion before input to obtain the review layout.
+\ifdefined\ReviewVersion
+  \documentclass[review,12pt,times,a4paper,nopreprintline]{elsarticle}
+\else
+  \documentclass[final,3p,times,nopreprintline]{elsarticle}
+\fi
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools,mathrsfs}
+\usepackage{booktabs,tabularx,array}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\hypersetup{hidelinks,pdftitle={Deformation, complexity and rigidity of ODE flows: Critical entropy, mixing costs and Hamiltonian dynamics},pdfauthor={},pdfsubject={Survey article on low-regularity flows and Hamiltonian rigidity}}
+\journal{Expositiones Mathematicae}
+\biboptions{numbers,sort&compress}
+\allowdisplaybreaks[2]
+\setlength{\emergencystretch}{2em}
+\setlist[enumerate]{label=\textnormal{(\roman*)},leftmargin=2em,itemsep=2pt,topsep=4pt}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{problem}[theorem]{Problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\T}{\mathbb T}
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\B}{\mathscr B}
+\newcommand{\X}{\mathscr X}
+\newcommand{\PP}{\mathcal P}
+\newcommand{\QQ}{\mathcal Q}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\vol}{m}
+\newcommand{\Lip}{\operatorname{Lip}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diver}{\operatorname{div}}
+\newcommand{\arsinh}{\operatorname{arsinh}}
+\newcommand{\ap}{\operatorname{ap}}
+\newcommand{\Ent}{\mathsf H}
+\newcommand{\action}{\mathcal S}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left|#1\right|}
+\numberwithin{equation}{section}
+\begin{document}
+\begin{frontmatter}
+\title{Deformation, complexity and rigidity of ODE flows: Critical entropy, mixing costs and Hamiltonian dynamics}
+% Insert the actual author names, affiliations and corresponding-author details here.
+% \author[aff1]{Author Name}
+% \ead{author@example.edu}
+% \affiliation[aff1]{organization={Department, Institution},city={City},country={Country}}
+\begin{abstract}
+Local deformation and global orbit structure give complementary perspectives on ODEs. We survey five problems: the endpoint Ruelle inequality for Sobolev flows, Bressan's mixing-cost conjecture, transport renormalization for fields of bounded deformation, periodic-orbit growth in Hamiltonian dynamics, and high-energy rigidity of periodically forced Newton equations. For incompressible, time-periodic $W^{1,1}$ fields, we prove continuity of finite-time exterior-power growth in the strong Sobolev topology and upper semicontinuity of the integrated positive Lyapunov spectrum. A stationary-joining criterion reduces entropy recovery to a scale-sensitive symbolic mismatch estimate. Finite $BV$ shears and summable infinite switching give explicit endpoint models. Logarithmic transport costs and radial commutators identify the distinct obstructions posed by weak-$L^1$ control and singular strain. In the Hamiltonian setting, we establish symplecticity of the variational cocycle with integrable Hessian, compute resonance growth in an integrable twist model, and classify periodic Newton potentials admitting a nondegenerate quadratic momentum integral. A Riccati argument also yields rigidity under a global smooth foliation by invariant graphs. The results distinguish linearized growth, metric entropy, periodic counting and complete integrability, and identify analytic and geometric transitions between them.
+\end{abstract}
+\begin{keyword}
+Regular Lagrangian flow \sep Critical regularity \sep Metric entropy \sep Mixing cost \sep Hamiltonian rigidity
+\MSC[2020] 37C10 \sep 37A35 \sep 35F10 \sep 37J35
+\end{keyword}
+\end{frontmatter}
+
+\section{Introduction}\label{sec:intro}
+Consider the ordinary differential equation
+\begin{equation}\label{eq:opening}
+ \dot x=b(t,x).
+\end{equation}
+Existence and uniqueness determine whether initial data specify a motion. They do not, by themselves, describe how much information that motion produces, how efficiently it rearranges material, or how its periodic trajectories are organized. A natural intermediate object is the deformation accumulated along trajectories. In the opposite direction, sufficiently coherent global orbit structure can constrain the equation itself. This article brings these two directions of inference into a common exposition.
+
+\subsection{Five problems and their common structure}
+The first problem lies between low-regularity transport theory and smooth ergodic theory. Let
+\[
+ b\in L^1(\R/\Z;W^{1,1}(\T^d;\R^d)),\qquad \diver b=0.
+\]
+The theories of DiPerna--Lions and Ambrosio provide a unique regular Lagrangian flow $X_t$~\cite{DL,Ambrosio}. An integrable linear equation along this flow defines a variational cocycle and its Lyapunov exponents~\cite{LeBrisLions}. For the time-one map $F=X_1$, the endpoint question is
+\begin{equation}\label{eq:introentropy}
+ h_m(F)\stackrel{?}{\leq}\int_{\T^d}\sum_{i=1}^d\lambda_i^+(x)\dd m(x).
+\end{equation}
+Here $m$ is normalized Lebesgue measure and exponents are counted with multiplicity. Bru\'e, Colombo and Johansson prove the corresponding inequality for $W^{1,p}$ fields with $p>1$ and ask whether finite entropy and the Ruelle inequality persist for $W^{1,1}$ and $BV$ fields~\cite[Theorem 1.2 and Question 1.3]{BCJ}. The missing step concerns long-time orbit coding, rather than uniqueness of the regular Lagrangian flow.
+
+The second problem concerns the minimum cost of finite-time rearrangement. Bressan's conjecture predicts that mixing two initially separated phases to scale $\varepsilon$ requires at least a logarithmic amount of cumulative spatial variation~\cite{Bressan}:
+\begin{equation}\label{eq:intromixing}
+ \int_0^T|D_xb(t)|(\T^d)\dd t
+ \stackrel{?}{\geq}c\log\frac1\varepsilon-C.
+\end{equation}
+Quantitative flow estimates and transport-distance methods give nonendpoint results under $W^{1,p}$ control, $p>1$~\cite{CrippaDeLellis,Seis,Leger}. The observation here is a prescribed material distribution at a specified time. By contrast, metric entropy takes a supremum over finite observational partitions and then measures an asymptotic information rate.
+
+The third problem weakens the available derivative information. Suppose only that the symmetric distributional derivative
+\[
+ Eb=\frac{Db+Db^{\mathsf T}}2
+\]
+is a finite matrix-valued measure. Does bounded deformation, together with suitable divergence and boundedness assumptions, imply renormalization of the transport equation? The space $BD$ controls strain rather than the full gradient~\cite{ACDM}; general $BD$ transport renormalization remains an open question~\cite{Inversi}. This question precedes the first two logically: a suitable motion must be selected before its complexity can be studied. Results for nearly incompressible $BV$ fields and their differentiability in measure settle related structural issues under different assumptions~\cite{BianchiniBonicatto,BianchiniDeNitti}.
+
+The fourth problem concerns smooth Hamiltonian dynamics. For a Hamiltonian diffeomorphism $F$ of a closed symplectic manifold, let $P_F(N)$ count geometrically distinct primitive periodic orbits of least period at most $N$. Albach, Hryniewicz and Oancea ask whether the following dichotomy holds~\cite{OpenProblems2026}:
+\begin{equation}\label{eq:introperiods}
+ \#\operatorname{Per}_{\mathrm{prim}}(F)<\infty
+ \quad\text{or}\quad
+ \liminf_{N\to\infty}\frac{\log P_F(N)}{\log N}\geq2.
+\end{equation}
+Periodic counting records closed-orbit organization. Resonances may create many periodic families even when variational growth is only polynomial and metric entropy vanishes.
+
+The fifth problem reverses the direction of the preceding estimates. Consider
+\begin{equation}\label{eq:intronewton}
+ \ddot u=-V_u(u,t),\qquad V\in C^\infty(\T^2).
+\end{equation}
+If all sufficiently large momenta belong to a complete foliation by invariant graphs, which potentials are possible? Bialy poses the classification of Newton equations that are totally integrable at infinity~\cite{OpenProblems2026}. Hopf-type methods already give rigidity under global no-conjugate-point hypotheses~\cite{BialyPolterovich}. At infinity, however, travelling-wave potentials supply nontrivial examples~\cite{BialyInfinity}.
+
+The five problems are connected by local deformation and global organization, but involve distinct mathematical objects. Table~\ref{tab:panorama} identifies the transition at issue in each case.
+\begin{table}[tb]
+\centering\small
+\caption{Local data, global objects and the transition under investigation.}\label{tab:panorama}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.19\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Problem & Basic object & Central transition\\
+\midrule
+Endpoint entropy & Incompressible $W^{1,1}$ flow & From variational growth to the information rate of typical trajectories.\\[4pt]
+Mixing cost & Two phases and a finite-time flow & From derivative cost to the attainable rearrangement scale.\\[4pt]
+$BD$ renormalization & Symmetric derivative measure & From singular strain to cancellation in transport commutators.\\[4pt]
+Periodic growth & Hamiltonian time-one map & From symplectic constraints to primitive-orbit counting.\\[4pt]
+Rigidity at infinity & Periodically forced Newton equation & From complete invariant graphs to the form of the potential.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Organization and principal deductions}
+The exposition uses deformation as its analytic connection and Hamiltonian systems as its geometric connection. Section~\ref{sec:framework} fixes the flow, measure and differential structures. Sections~\ref{sec:strain}--\ref{sec:joining} prove the strain estimate, upper semicontinuity of the positive spectral integral, and a stationary-joining criterion for entropy recovery. In particular,
+\begin{equation}\label{eq:intromain}
+ b_n\to b\text{ in }L^1_tW^{1,1}_x
+ \quad\Longrightarrow\quad
+ \limsup_n\Lambda(b_n)\leq\Lambda(b),
+ \qquad \Lambda(b):=\int\sum_i\lambda_i^+\dd m.
+\end{equation}
+Section~\ref{sec:shears} treats finite and countable shear compositions. Sections~\ref{sec:mixing} and~\ref{sec:BD} use logarithmic transport costs and radial commutators to isolate two different endpoint obstructions. Section~\ref{sec:Hamilton} develops the symplectic variational structure and a resonance-counting model. Section~\ref{sec:Newton} classifies potentials with a quadratic momentum first integral: apart from a time-dependent gauge, every spatially nonconstant potential in that class has the form
+\begin{equation}\label{eq:introclassification}
+ V(u,t)=V_0(nu+mt)+Q(t),\qquad n\geq1,\quad m\in\Z.
+\end{equation}
+It also proves rigidity for a global smooth foliation by invariant graphs. The final sections compare the logical implications and explain their consequences for transport, switching control and mechanics. Structural results from the literature are cited where used; the remaining transitions are formulated as conjectures or problems.
+
+\section{Flows, differentials and global invariants}\label{sec:framework}
+\subsection{From pointwise initial-value problems to measure-preserving flows}
+Picard--Lindel\"of theory gives local uniqueness under a local Lipschitz hypothesis, while Peano's theorem gives existence for continuous fields. Osgood's condition replaces the linear modulus by a modulus $\omega$: if
+\[
+ |b(t,x)-b(t,y)|\leq g(t)\omega(|x-y|),\qquad
+ g\in L^1_{\mathrm{loc}},\qquad
+ \int_{0^+}\frac{\dd r}{\omega(r)}=\infty,
+\]
+an integral comparison restores uniqueness~\cite{Teschl}. Sobolev transport theory instead selects a family of trajectories satisfying a compression constraint~\cite{DL,Ambrosio}.
+
+Fix $d\geq2$ and write $m$ for normalized Lebesgue measure on $\T^d=\R^d/\Z^d$. Set
+\begin{align}
+ \X_d&=L^1(\R/\Z;W^{1,1}(\T^d;\R^d)),\label{eq:space}\\
+ \B_d&=\{b\in\X_d:\diver_xb=0\},\label{eq:class}\\
+ \|b\|_{\X_d}&=\int_0^1\bigl(\|b(t)\|_{L^1}+\|\nabla b(t)\|_{L^1}\bigr)\dd t.\notag
+\end{align}
+Divergence is understood distributionally. Unless specified otherwise, no boundedness assumption is imposed on $b$.
+
+\begin{definition}[Incompressible regular Lagrangian flow]
+A Borel family $X_{t,s}:\T^d\to\T^d$ is an incompressible regular Lagrangian flow of $b\in\B_d$ if, for each $s$ and almost every $x$, the curve $t\mapsto X_{t,s}(x)$ is locally absolutely continuous and satisfies
+\[
+ X_{s,s}(x)=x,\qquad
+ \frac{\dd}{\dd t}X_{t,s}(x)=b(t,X_{t,s}(x))\quad\text{for a.e. }t,
+\]
+and $(X_{t,s})_\#m=m$.
+\end{definition}
+The flow exists and is unique up to almost-everywhere equality. Its composition law and time periodicity imply
+\begin{equation}\label{eq:timeone}
+ F_b=X_{1,0},\qquad X_{n,0}=F_b^n,\qquad n\in\N.
+\end{equation}
+The map $F_b$ is invertible modulo null sets. We abbreviate $X_t=X_{t,0}$.
+
+\subsection{The variational cocycle and weak differentials}
+Measure preservation gives, for every finite $q>0$,
+\begin{equation}\label{eq:fubiniA}
+ \int_{\T^d}\int_0^q|\nabla b(t,X_t(x))|\dd t\dd m(x)
+ =\int_0^q\int_{\T^d}|\nabla b(t,z)|\dd m(z)\dd t<\infty.
+\end{equation}
+Consequently, along almost every trajectory the matrix equation
+\begin{equation}\label{eq:variational}
+ \dot W_t=A(t,x)W_t,\qquad
+ A(t,x)=\nabla b(t,X_t(x)),\qquad W_0=I_d
+\end{equation}
+has a unique absolutely continuous fundamental solution. Liouville's formula gives $\det W_t=1$, and at integer times
+\begin{equation}\label{eq:cocycle}
+ W_{n+q}(x)=W_q(F_b^nx)W_n(x).
+\end{equation}
+
+Classical differentiability, approximate differentiability and differentiability in measure are different properties. A convenient formulation of the last property is that, for every $\delta>0$,
+\begin{equation}\label{eq:differentialmeasure}
+ \lim_{r\downarrow0}(m\otimes\mathcal L^d)
+ \left\{(x,v)\in\T^d\times B_1:
+ \left|\frac{X_t(x+rv)-X_t(x)}r-W_t(x)v\right|>\delta\right\}=0,
+\end{equation}
+where differences are interpreted in compatible local Euclidean charts. Le Bris--Lions identify the solution of~\eqref{eq:variational} with the differential in measure~\cite{LeBrisLions}. Bianchini--De Nitti establish a corresponding theory for nearly incompressible $BV$ fields, using measure-valued coefficients along trajectories~\cite{BianchiniDeNitti}. The challenge for $BV$ entropy is thus to extract orbit-covering estimates from a weak differential structure.
+
+Gr\"onwall's inequality implies that $\log^+\|W_1\|$ and $\log^+\|W_1^{-1}\|$ belong to $L^1(m)$. Oseledets' theorem gives exponents, repeated according to multiplicity,
+\[
+ \lambda_1(x)\geq\cdots\geq\lambda_d(x),\qquad
+ \sum_{i=1}^d\lambda_i(x)=0.
+\]
+Define the integrated positive spectrum by
+\begin{equation}\label{eq:lambda}
+ \Lambda(b)=\int_{\T^d}\sum_{i=1}^d\lambda_i^+(x)\dd m(x).
+\end{equation}
+
+\subsection{Entropy and complementary dynamical structures}
+For a finite measurable partition $\PP$, let
+\begin{align}
+ \Ent_m(\PP)&=-\sum_{P\in\PP}m(P)\log m(P),\label{eq:shannon}\\
+ h_m(F,\PP)&=\lim_{N\to\infty}\frac1N
+ \Ent_m\!\left(\bigvee_{j=0}^{N-1}F^{-j}\PP\right),\qquad
+ h_m(F)=\sup_{\PP}h_m(F,\PP).\label{eq:metricentropy}
+\end{align}
+We set $0\log0=0$ and use natural logarithms. Subadditivity gives the limit. Standard ergodic-theoretic results used below can be found in~\cite{Walters,KatokHasselblatt}.
+
+The Sacker--Sell spectrum organizes uniform growth of nonautonomous linear systems through exponential dichotomies~\cite{SackerSell}; Lyapunov exponents describe almost-everywhere growth relative to an invariant measure. The Bohl spectrum provides another nonautonomous growth notion~\cite{DoanPalmerRasmussen}. Centre manifold theory concerns local reduction near nonhyperbolic equilibria~\cite{Carr}, Fenichel theory organizes singular perturbations through normal hyperbolicity~\cite{Fenichel}, and the Conley index records isolated invariant sets and continuation~\cite{Conley}. None of these objects has the same quantifiers as metric entropy, primitive-periodic-orbit counting, or a complete foliation of phase space.
+
+Topological entropy counts distinguishable trajectories without fixing their volume weight. Accordingly, infinite topological entropy for non-Lipschitz Osgood fields~\cite{JohanssonMescolini} is distinct from the Lebesgue-entropy question considered here. Periodic counting likewise assigns no volume weight to a periodic family. Section~\ref{sec:Hamilton} gives explicit zero-entropy systems with abundant periodic orbits.
+
+\section{Strain and exterior-power growth}\label{sec:strain}
+\subsection{An integrated deformation budget}
+For $A\in GL(d,\R)$ with singular values $\sigma_1(A)\geq\cdots\geq\sigma_d(A)>0$, set
+\begin{equation}\label{eq:Omega}
+ \Omega(A)=\max_{0\leq k\leq d}\left\|\bigwedge^kA\right\|
+ =\prod_{i=1}^d\max\{1,\sigma_i(A)\},
+\end{equation}
+with $\bigwedge^0A=1$. Since exterior powers are multiplicative representations,
+\begin{equation}\label{eq:OmegaSub}
+ \Omega(AB)\leq\Omega(A)\Omega(B),\qquad \log\Omega(A)\geq0.
+\end{equation}
+This quantity retains expansion in every dimension rather than only the largest stretching factor.
+
+\begin{proposition}[Strain controls exterior-power growth]\label{prop:strain}
+Let $b\in\B_d$, and write
+\[
+ S_b(t,z)=\tfrac12\bigl(\nabla b(t,z)+\nabla b(t,z)^{\mathsf T}\bigr),\qquad
+ \action(b)=\int_0^1\int_{\T^d}\tr(S_b)_+(t,z)\dd m(z)\dd t.
+\]
+Here $S_+$ denotes the positive spectral part of a symmetric matrix. For every $T>0$ and almost every $x$,
+\begin{equation}\label{eq:wstrain}
+ \log\Omega(W_T(x))\leq\int_0^T\tr(S_b)_+(t,X_t(x))\dd t.
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:lambdastr}
+ \Lambda(b)\leq\action(b)
+ \leq\frac{\sqrt d}{2}\int_0^1\int_{\T^d}|\nabla b|_{\mathrm F}\dd m\dd t<\infty,
+\end{equation}
+where $|\cdot|_{\mathrm F}$ is the Frobenius norm.
+\end{proposition}
+\begin{proof}
+Fix a trajectory on which the inner integral in~\eqref{eq:fubiniA} is finite. Let $s_1(t)\geq\cdots\geq s_d(t)$ be the eigenvalues of $S_b(t,X_t(x))$. The symmetric part of the generator induced on the $k$th exterior power has largest eigenvalue $s_1+\cdots+s_k$. This follows by diagonalizing the symmetric part; the skew-symmetric part induces infinitesimal rotations and makes no contribution to the norm derivative. Hence, in the upper-derivative or integral sense,
+\[
+ \frac{\dd}{\dd t}\log\left\|\bigwedge^kW_t\right\|
+ \leq\sum_{i=1}^ks_i(t)
+ \leq\sum_{i=1}^d\max\{s_i(t),0\}.
+\]
+Integrating and maximizing over $k$ proves~\eqref{eq:wstrain}. Integrable coefficients follow by approximation in the linear equation.
+
+Take $T=n\in\N$, integrate in $x$, and use incompressibility and periodicity to obtain
+\[
+ \frac1n\int_{\T^d}\log\Omega(W_n(x))\dd m(x)\leq\action(b).
+\]
+Oseledets' theorem gives $n^{-1}\log\Omega(W_n)\to\sum_i\lambda_i^+$ almost everywhere. Fatou's lemma proves $\Lambda(b)\leq\action(b)$.
+
+Finally, $\tr S_b=\diver b=0$, so $\tr(S_b)_+=\frac12\sum_i|s_i|$. Therefore
+\[
+ \tr(S_b)_+\leq\frac{\sqrt d}{2}|S_b|_{\mathrm F}
+ \leq\frac{\sqrt d}{2}|\nabla b|_{\mathrm F}.
+\]
+Integrating gives the last bound.
+\end{proof}
+
+The estimate concerns linearized volume growth. Its dependence on symmetric strain will reappear in the radial transport commutator of Section~\ref{sec:BD}. Establishing a bound for orbit information requires an additional argument.
+
+\subsection{A finite-time representation of the positive spectrum}
+\begin{proposition}[Subadditive representation]\label{prop:subadditive}
+For $q\in\N$, define
+\begin{equation}\label{eq:Lq}
+ L_q(b)=\int_{\T^d}\log\Omega(W_q(x))\dd m(x).
+\end{equation}
+Then
+\begin{equation}\label{eq:infL}
+ \Lambda(b)=\lim_{q\to\infty}\frac{L_q(b)}q
+ =\inf_{q\geq1}\frac{L_q(b)}q.
+\end{equation}
+\end{proposition}
+\begin{proof}
+By~\eqref{eq:cocycle} and~\eqref{eq:OmegaSub}, $\phi_q=\log\Omega(W_q)$ satisfies
+\[
+ \phi_{q+r}(x)\leq\phi_q(x)+\phi_r(F_b^qx).
+\]
+Furthermore, $0\leq\phi_q\leq\sum_{j=0}^{q-1}\phi_1\circ F_b^j$ and $\phi_1\in L^1$. Kingman's subadditive ergodic theorem identifies the integrated limit with $\inf_q q^{-1}\int\phi_q$. Oseledets' theorem identifies the pointwise limit as $\sum_i\lambda_i^+$. This proves~\eqref{eq:infL}; the integrability hypotheses are precisely those in the standard subadditive theorem~\cite{Walters,KatokHasselblatt}.
+\end{proof}
+
+\section{Spectral stability and entropy recovery at critical regularity}\label{sec:spectral}
+\begin{theorem}[Upper semicontinuity of the positive spectral integral]\label{thm:spectral}
+If $b_n,b\in\B_d$ and $\|b_n-b\|_{\X_d}\to0$, then for every fixed integer $q\geq1$,
+\begin{equation}\label{eq:Lcont}
+ L_q(b_n)\longrightarrow L_q(b).
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:spectralusc}
+ \limsup_{n\to\infty}\Lambda(b_n)\leq\Lambda(b).
+\end{equation}
+\end{theorem}
+\begin{proof}
+Extend the fields periodically to $[0,q]$, and write $X_t^n=X_t^{b_n}$ and $X_t=X_t^b$. Stability of regular Lagrangian flows~\cite{DL,Ambrosio} yields
+\begin{equation}\label{eq:flowstab}
+ \sup_{0\leq t\leq q}d_{\T^d}(X_t^n(x),X_t(x))\longrightarrow0
+ \quad\text{in measure}.
+\end{equation}
+
+\emph{Step 1: convergence of the pulled-back coefficients.}
+Set $A_n(t,x)=\nabla b_n(t,X_t^n(x))$ and $A(t,x)=\nabla b(t,X_t(x))$. Decompose
+\begin{align*}
+ A_n-A={}&[\nabla b_n-\nabla b](t,X_t^n(x))\\
+ &+\nabla b(t,X_t^n(x))-\nabla b(t,X_t(x)).
+\end{align*}
+The first term has $L^1$ norm equal to $\|\nabla b_n-\nabla b\|_{L^1_{t,z}}$, by measure preservation. For the second, choose a bounded continuous matrix field $C$ on $[0,q]\times\T^d$ with $\|\nabla b-C\|_{L^1}<\varepsilon$. Replacing $\nabla b$ by $C$ along the two flows costs at most $2\varepsilon$. Uniform continuity of $C$ and~\eqref{eq:flowstab} make the remaining difference converge to zero in $L^1$. Thus
+\begin{equation}\label{eq:Aconv}
+ \|A_n-A\|_{L^1([0,q]\times\T^d)}\longrightarrow0.
+\end{equation}
+
+\emph{Step 2: convergence of the fundamental matrices.}
+Put
+\[
+ a_n(x)=\int_0^q|A_n(t,x)|_{\mathrm F}\dd t,\qquad
+ a(x)=\int_0^q|A(t,x)|_{\mathrm F}\dd t.
+\]
+Equation~\eqref{eq:Aconv} implies $a_n\to a$ in $L^1$, and hence uniform integrability of $\{a_n\}$. Variation of constants gives
+\begin{equation}\label{eq:Wdifference}
+ \sup_{t\leq q}|W_t^n-W_t|
+ \leq e^{a_n+a}\int_0^q|A_n-A|\dd t.
+\end{equation}
+On $\{a_n+a\leq R\}$ the right-hand side converges to zero in measure. The complementary set has measure $O(R^{-1})$, uniformly in $n$. Letting first $n\to\infty$ and then $R\to\infty$ proves $W_q^n\to W_q$ in measure. No integrability of the exponential factor is needed.
+
+\emph{Step 3: continuity of integrated logarithmic growth.}
+The function $\log\Omega$ is continuous on $GL(d,\R)$ and
+\[
+ 0\leq\log\Omega(W_q^n(x))\leq d\,a_n(x).
+\]
+The logarithmic growth functions are therefore uniformly integrable. Vitali's theorem upgrades convergence in measure to convergence of their integrals, proving~\eqref{eq:Lcont}.
+
+\emph{Step 4: passage to asymptotic growth.}
+For each fixed $q$, Proposition~\ref{prop:subadditive} gives
+\[
+ \limsup_n\Lambda(b_n)\leq\lim_n\frac{L_q(b_n)}q=\frac{L_q(b)}q.
+\]
+Taking the infimum over $q$ proves~\eqref{eq:spectralusc}.
+\end{proof}
+
+\subsection{The endpoint inequality and a recovery conjecture}
+\begin{conjecture}[Endpoint Ruelle inequality]\label{conj:ERI}
+Every $b\in\B_d$ satisfies
+\begin{equation}\label{eq:ERI}
+ h_m(F_b)\leq\Lambda(b).
+\end{equation}
+\end{conjecture}
+This is the spectral form of the endpoint question in~\cite[Question 1.3]{BCJ}. Proposition~\ref{prop:strain} would then give $h_m(F_b)\leq\action(b)<\infty$. The entropy defect
+\begin{equation}\label{eq:defect}
+ \Delta(b)=\bigl[h_m(F_b)-\Lambda(b)\bigr]_+
+\end{equation}
+is well defined in $[0,\infty]$ because $\Lambda(b)$ is finite. The conjecture says that $\Delta$ vanishes on $\B_d$.
+
+We formulate the following sufficient mechanism for eliminating this defect.
+\begin{conjecture}[Entropy-recovering regularization]\label{conj:ERR}
+For every $b\in\B_d$, there exist smooth, incompressible, time-periodic fields $b_n$ such that
+\begin{equation}\label{eq:ERR}
+ b_n\longrightarrow b\quad\text{in }\X_d,
+ \qquad h_m(F_b)\leq\liminf_{n\to\infty}h_m(F_{b_n}).
+\end{equation}
+\end{conjecture}
+The quantifier is existential: the approximation may be chosen according to the dynamics. Periodic convolution supplies strong Sobolev approximation, while the second requirement asks for recovery of the original orbit information.
+
+\begin{corollary}[Recovery implies the endpoint inequality]\label{cor:reduction}
+If Conjecture~\ref{conj:ERR} holds for $b\in\B_d$, then
+\[
+ h_m(F_b)\leq\Lambda(b)\leq\action(b).
+\]
+\end{corollary}
+\begin{proof}
+For an entropy-recovering smooth sequence, the classical Ruelle inequality~\cite{Ruelle} and Theorem~\ref{thm:spectral} give
+\begin{align*}
+ h_m(F_b)&\leq\liminf_n h_m(F_{b_n})
+ \leq\limsup_n h_m(F_{b_n})\\
+ &\leq\limsup_n\Lambda(b_n)\leq\Lambda(b)\leq\action(b).
+\end{align*}
+\end{proof}
+
+\subsection{The order-of-limits obstruction}
+Fix a finite partition $\PP$ whose boundary has zero measure. For each fixed block length $q$, finite-time stability implies
+\[
+ \Ent_m\!\left(\bigvee_{j=0}^{q-1}F_{b_n}^{-j}\PP\right)
+ \longrightarrow
+ \Ent_m\!\left(\bigvee_{j=0}^{q-1}F_b^{-j}\PP\right).
+\]
+Since partition entropy is the infimum of normalized block entropies, this continuity yields an upper-semicontinuity direction for the fixed partition. Entropy recovery requires a lower bound for the full entropy. Thus the observation window must be controlled as its length tends to infinity, not only after it has been fixed. Stationary joinings provide one way of encoding such simultaneous control.
+
+\section{Stationary joinings and partition entropy}\label{sec:joining}
+\subsection{Symbolic mismatch under a stationary coupling}
+\begin{definition}[Joining]
+Let $F$ and $G$ preserve $(\T^d,m)$. A probability measure $\pi$ on $\T^d\times\T^d$ is a joining of $F$ and $G$ if
+\[
+ (\operatorname{pr}_1)_\#\pi=(\operatorname{pr}_2)_\#\pi=m,
+ \qquad (F\times G)_\#\pi=\pi.
+\]
+\end{definition}
+The product measure is always a joining. A joining with small symbolic mismatch is much more restrictive: stationarity constrains the coupling at every time.
+
+\begin{lemma}[Finite-alphabet entropy estimate]\label{lem:joining}
+Let $\PP$ be a partition with $r\geq2$ atoms and let $\pi$ be a joining of $F$ and $G$. Define
+\[
+ \delta=\pi\{(x,y):\PP(x)\ne\PP(y)\},\qquad
+ H_2(\delta)=-\delta\log\delta-(1-\delta)\log(1-\delta).
+\]
+Then
+\begin{equation}\label{eq:fano}
+ |h_m(F,\PP)-h_m(G,\PP)|
+ \leq H_2(\delta)+\delta\log(r-1).
+\end{equation}
+\end{lemma}
+\begin{proof}
+On $(\T^d\times\T^d,\pi)$, set
+\[
+ U_j=\PP(F^jx),\qquad V_j=\PP(G^jy),\qquad j\geq0.
+\]
+Stationarity makes the mismatch probability equal to $\delta$ at every time. Let $E_j=\mathbf1_{\{U_j\ne V_j\}}$. Given $V_j$ and $E_j=0$, the value of $U_j$ is determined; given $V_j$ and $E_j=1$, it has at most $r-1$ possible values. Hence
+\[
+ \Ent(U_j\mid V_j)\leq H_2(\delta)+\delta\log(r-1).
+\]
+The conditional-entropy chain rule gives
+\[
+ \Ent(U_0,\ldots,U_{N-1})
+ \leq\Ent(V_0,\ldots,V_{N-1})
+ +\sum_{j=0}^{N-1}\Ent(U_j\mid V_j).
+\]
+Divide by $N$ and pass to the limit. Interchanging $U$ and $V$ gives the other direction. This is the usual finite-alphabet conditional-entropy estimate applied to a stationary coupling.
+\end{proof}
+
+\begin{proposition}[Fine-partition recovery criterion]\label{prop:joinrec}
+Let $\QQ_k$ be the dyadic partitions of $\T^d$, with $r_k=2^{dk}$ atoms. Suppose that there are $b_n\in C^\infty\cap\B_d$, integers $k_n\uparrow\infty$, and joinings $\pi_n$ of $F_b$ and $F_{b_n}$ such that
+\[
+ b_n\to b\text{ in }\X_d,\qquad
+ \delta_n:=\pi_n\{\QQ_{k_n}(x)\ne\QQ_{k_n}(y)\},\qquad
+ \delta_n k_n\longrightarrow0.
+\]
+Then entropy-recovering regularization holds for $b$, and therefore so does the endpoint Ruelle inequality.
+\end{proposition}
+\begin{proof}
+Lemma~\ref{lem:joining} yields
+\[
+ h_m(F_b,\QQ_{k_n})
+ \leq h_m(F_{b_n})+H_2(\delta_n)+d\delta_n k_n\log2.
+\]
+The error tends to zero. The dyadic partitions increase and generate the Borel $\sigma$-algebra, so $h_m(F_b,\QQ_{k_n})\uparrow h_m(F_b)$. Taking the lower limit proves~\eqref{eq:ERR}, including the case of infinite entropy. Corollary~\ref{cor:reduction} completes the argument.
+\end{proof}
+
+\subsection{Finite-time proximity versus stationary compatibility}
+The preceding criterion requires both dynamical compatibility and scale-sensitive accuracy. A diagonal coupling has zero mismatch initially but is generally not invariant under $F_b\times F_{b_n}$. Ces\`aro averages of its iterates are asymptotically invariant. Passing to an invariant weak limit requires additional care for merely measurable maps, or a suitable symbolic realization; in either formulation, spatial proximity may be lost during the averaging. The unresolved construction is a joining that retains the accuracy $\delta_n k_n\to0$ while remaining stationary.
+
+This requirement is sufficient rather than necessary for entropy recovery. A direct lower bound on the entropy of selected smooth approximations would also suffice, without producing spatially close stationary couplings. Conversely, failure of the joining construction alone would not disprove the endpoint Ruelle inequality.
+
+\section{Shear flows: singular profiles and countable switching}\label{sec:shears}
+\subsection{Logarithmic Lusin control}
+For $a\in BV(\T;\R)$, define horizontal and vertical shears by
+\[
+ H_a(x,y)=(x+a(y),y),\qquad
+ V_a(x,y)=(x,y+a(x))\pmod1.
+\]
+Choose the usual $BV$ representatives and interpret maps modulo null sets. Fubini's theorem shows that both preserve area, with inverses $H_{-a}$ and $V_{-a}$. Consider
+\[
+ F=S_N\circ\cdots\circ S_1,\qquad
+ S_j\in\{H_{a_j},V_{a_j}\}.
+\]
+The profiles may have jump or Cantor parts in their derivative measures.
+
+\begin{lemma}[Logarithmic control of a shear]\label{lem:shearlusin}
+For every $a\in BV(\T)$, there is a nonnegative $g_a$ belonging to $L^p(\T)$ for every finite $p>1$ such that, on a full-measure set,
+\begin{equation}\label{eq:shearlusin}
+ d(H_az,H_az')\leq e^{g_a(y)+g_a(y')}d(z,z').
+\end{equation}
+The analogous statement holds for $V_a$. If $0<V:=|Da|(\T)\leq1$, one may choose
+\begin{equation}\label{eq:gLp}
+ \|g_a\|_{L^p}\leq C_p V^{1/p}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Let $M|Da|$ be the Hardy--Littlewood maximal function of the finite measure $|Da|$ on the circle. At Lebesgue points,
+\[
+ |a(y)-a(y')|\leq C d_{\T}(y,y')
+ \bigl(M|Da|(y)+M|Da|(y')\bigr).
+\]
+In one dimension this follows from the variation on a short arc joining the points. The torus metric then gives
+\[
+ d(H_az,H_az')\leq
+ [1+C M|Da|(y)+C M|Da|(y')]d(z,z').
+\]
+Take $g_a=\log(1+C M|Da|)$ and use $1+s+t\leq(1+s)(1+t)$.
+
+The weak-type maximal estimate implies
+\begin{equation}\label{eq:gtail}
+ m\{g_a>s\}\leq\min\left\{1,\frac{CV}{e^s-1}\right\}.
+\end{equation}
+Consequently,
+\[
+ \|g_a\|_{L^p}^p
+ =p\int_0^\infty s^{p-1}m\{g_a>s\}\dd s<\infty.
+\]
+For $V\leq1$, split the integral at $V$ and $1$. The three parts are bounded, respectively, by
+\[
+ V^p,\qquad C_pV\int_V^1s^{p-2}\dd s,
+ \qquad C_pV\int_1^\infty s^{p-1}e^{-s}\dd s.
+\]
+Their sum is at most $C_pV$, proving~\eqref{eq:gLp}. The maximal-function and $BV$ facts used here are standard; see~\cite{EvansGariepy}.
+\end{proof}
+
+We use the following result of Bru\'e--Colombo--Johansson~\cite[Theorem 5.2]{BCJ}. A Lebesgue-measure-preserving torus map satisfying
+\begin{equation}\label{eq:singularruellehyp}
+ d(Tx,Ty)\leq e^{g(x)+g(y)}d(x,y),\qquad
+ g\in L^p(m),\quad p>1,
+\end{equation}
+on a full-measure set has an approximate differential and satisfies the Ruelle inequality for its approximate differential cocycle. This is the external entropy theorem used in the shear models.
+
+\subsection{Finite compositions of \texorpdfstring{$BV$}{BV} shears}
+\begin{theorem}[Finite $BV$ shear estimate]\label{thm:finiteshear}
+For $F=S_N\circ\cdots\circ S_1$ as above,
+\begin{equation}\label{eq:finiteshear}
+ \begin{split}
+ h_m(F)&\leq\int_{\T^2}\lambda^+(F,z)\dd m(z)\\
+ &\leq\sum_{j=1}^N\int_{\T}
+ \arsinh\!\left(\frac{|a'_{j,\mathrm{ac}}(s)|}{2}\right)\dd s
+ \leq\frac12\sum_{j=1}^N|D^aa_j|(\T).
+ \end{split}
+\end{equation}
+Here $D^aa_j=a'_{j,\mathrm{ac}}\dd s$ is the absolutely continuous part of $Da_j$, and $\lambda^+(F,z)$ is the nonnegative top exponent of the approximate differential cocycle.
+\end{theorem}
+\begin{proof}
+Write $F_j=S_j\circ\cdots\circ S_1$ and $F_0=\Id$. Iterating Lemma~\ref{lem:shearlusin} gives
+\[
+ d(Fz,Fz')\leq e^{g(z)+g(z')}d(z,z'),\qquad
+ g=\sum_{j=1}^Ng_{a_j}\circ\operatorname{coord}_j\circ F_{j-1},
+\]
+where $\operatorname{coord}_j$ is the coordinate on which the $j$th shear depends. Each $F_j$ preserves area, so $g\in L^p(\T^2)$ for every finite $p>1$. The finite union of pullbacks of the exceptional sets is null. Thus~\eqref{eq:singularruellehyp} applies and proves the entropy inequality.
+
+A $BV$ function is approximately differentiable almost everywhere, with approximate derivative $a'_{\mathrm{ac}}$. Hence
+\[
+ D^{\ap}H_a=\begin{pmatrix}1&a'_{\mathrm{ac}}(y)\\0&1\end{pmatrix},
+\]
+and the vertical case is lower triangular. The approximate chain rule follows by restricting to Lusin--Lipschitz pieces. Measure preservation ensures that intermediate points avoid the required null sets. In particular, $\det D^{\ap}F=1$.
+
+For the shear matrix $M_t=\left(\begin{smallmatrix}1&t\\0&1\end{smallmatrix}\right)$,
+\[
+ \sigma_{\max}(M_t)=\frac{\sqrt{t^2+4}+|t|}{2},\qquad
+ \log\Omega(M_t)=\arsinh(|t|/2).
+\]
+Submultiplicativity of $\Omega$ and measure preservation yield
+\[
+ \int\log\Omega(D^{\ap}F)\dd m
+ \leq\sum_{j=1}^N\int_{\T}\arsinh(|a'_{j,\mathrm{ac}}|/2)\dd s.
+\]
+The integrated positive exponent is at most the one-step logarithmic growth integral, by the subadditive theorem. Finally, $\arsinh r\leq r$ for $r\geq0$.
+\end{proof}
+
+\begin{corollary}[Purely singular finite shears]\label{cor:puresingular}
+If every $Da_j$ is singular with respect to Lebesgue measure, then $h_m(F)=0$.
+\end{corollary}
+\begin{proof}
+In this case $a'_{j,\mathrm{ac}}=0$ almost everywhere, and the right-hand side of~\eqref{eq:finiteshear} vanishes.
+\end{proof}
+The corollary covers finite compositions of piecewise constant shears and shears with Cantor derivative measures. Its proof uses the logarithmic Lusin structure of finite compositions. General $BV$ flows instead involve the measure differential developed in~\cite{BianchiniDeNitti}, and their entropy problem retains the endpoint difficulty identified in~\cite{BCJ}.
+
+\subsection{Bounded velocity with infinitely many switches}
+Let $a_j\in W^{1,1}(\T)$ have mean zero, and assume
+\begin{equation}\label{eq:sumV}
+ V_j=\|a_j'\|_{L^1},\qquad 0<V:=\sum_{j=1}^\infty V_j<\infty.
+\end{equation}
+Discard zero profiles. One-dimensional absolute continuity gives $\|a_j\|_\infty\leq V_j$. Set
+\[
+ \delta_j=V_j/V,\qquad t_j=\sum_{\ell\leq j}\delta_\ell,\qquad t_j\uparrow1.
+\]
+On $(t_{j-1},t_j)$ choose the horizontal or vertical field
+\begin{equation}\label{eq:switchfield}
+ b(t,x,y)=\delta_j^{-1}(a_j(y),0)
+ \quad\text{or}\quad
+ b(t,x,y)=\delta_j^{-1}(0,a_j(x)).
+\end{equation}
+Its periodic extension satisfies
+\begin{equation}\label{eq:switchbudget}
+ \|b\|_{L^\infty}\leq V,\qquad
+ \int_0^1\|\nabla b(t)\|_{L^1}\dd t=V,\qquad
+ \action(b)=V/2.
+\end{equation}
+This is a bounded field in $\B_2$ whose switching times accumulate at the end of one period.
+
+For $F_N=S_N\circ\cdots\circ S_1$,
+\[
+ \sup_zd(F_{N+k}(z),F_N(z))\leq\sum_{j>N}\|a_j\|_\infty\longrightarrow0.
+\]
+Thus $F_N$ converges uniformly to a continuous map $F_\infty$. Truncating the field after $t_N$ produces $b^{(N)}\to b$ strongly in $\X_2$. Flow stability identifies $F_\infty$ with $F_b$ modulo null sets. In particular, the limiting map is invertible in the measure-theoretic sense.
+
+\begin{theorem}[Countable shears under strengthened summability]\label{thm:infiniteshear}
+Suppose~\eqref{eq:sumV} holds and, for some $p>1$,
+\begin{equation}\label{eq:strongsum}
+ \sum_{j=1}^\infty V_j^{1/p}<\infty.
+\end{equation}
+Then
+\begin{equation}\label{eq:infinitebound}
+ h_m(F_\infty)\leq\Lambda(b)\leq V/2.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Lift the functions in Lemma~\ref{lem:shearlusin} to the appropriate torus coordinate, writing them as $\widetilde g_j$. Apart from finitely many terms with $V_j>1$,
+\[
+ \|\widetilde g_j\circ F_{j-1}\|_{L^p}
+ =\|\widetilde g_j\|_{L^p}\leq C_pV_j^{1/p}.
+\]
+Minkowski's inequality and~\eqref{eq:strongsum} show that
+\[
+ g_\infty=\sum_{j=1}^\infty\widetilde g_j\circ F_{j-1}
+\]
+converges in $L^p$ and is finite almost everywhere. For each $N$,
+\[
+ d(F_Nz,F_Nz')\leq e^{g_\infty(z)+g_\infty(z')}d(z,z').
+\]
+Uniform convergence gives the same estimate for $F_\infty$. The singular-map Ruelle theorem~\cite[Theorem 5.2]{BCJ} therefore applies.
+
+It remains to identify its differential cocycle. The restriction of $F_\infty$ to each $\{g_\infty\leq R\}$ is Lipschitz, which supplies an approximate differential. Its differential in measure is $W_1$ by~\cite{LeBrisLions}. An existing approximate differential also satisfies the differential-in-measure property, whose value is unique almost everywhere. Therefore the two coincide. The spectral integral in the Ruelle bound is exactly $\Lambda(b)$. Proposition~\ref{prop:strain} and~\eqref{eq:switchbudget} give the remaining estimate.
+\end{proof}
+
+Condition~\eqref{eq:strongsum} concerns switching costs, not $L^p$ regularity of individual profile derivatives. For example, on the circle represented by $[0,1)$, set
+\[
+ f(s)=\frac{\mathbf1_{(0,e^{-2})}(s)}{s(\log(1/s))^2},\qquad
+ a'(s)=f(s)-\int_{\T}f.
+\]
+Integration and subtraction of the mean produce $a\in W^{1,1}(\T)$, although $a'\notin L^p$ for any $p>1$. Scaled copies of this profile can satisfy~\eqref{eq:strongsum}.
+
+\subsection{A genuinely critical cost sequence}
+\begin{conjecture}[Entropy control for finite-cost countable shears]\label{conj:shear}
+Every mean-zero $W^{1,1}$ shear sequence satisfying~\eqref{eq:sumV} obeys
+\[
+ h_m(F_\infty)\leq\Lambda(b)\leq\frac12\sum_jV_j,
+\]
+without the additional assumption~\eqref{eq:strongsum}.
+\end{conjecture}
+This is a structured special case of Conjecture~\ref{conj:ERI}. The sequence
+\begin{equation}\label{eq:criticalsequence}
+ V_j=\frac{c}{j(\log(j+1))^2},\qquad j\geq2,
+\end{equation}
+satisfies $\sum_jV_j<\infty$, whereas $\sum_jV_j^{1/p}=\infty$ for every $p>1$. It therefore meets the finite-cost hypothesis but lies outside Theorem~\ref{thm:infiniteshear}.
+
+The model concentrates the endpoint issue on repeated rearrangements of the same positive-measure population of trajectories. Each stage pays $V_j$, the velocity remains bounded, and the limiting map combines all scales. Uniform convergence of finite stages does not settle the information rate of the limit; a recovery mechanism or a direct long-time coding estimate is still required.
+
+\section{Finite-time mixing and logarithmic transport costs}\label{sec:mixing}
+\subsection{The geometric mixing problem}
+Let $E_0=\{x\in\T^d:0<x_1<1/2\}$, let $E_T=X_T(E_0)$, and fix $\kappa\in(0,1/2)$. The set $E_T$ is $\kappa$-mixed at scale $\varepsilon$ if
+\begin{equation}\label{eq:geometricmixing}
+ \kappa\leq\frac{m(E_T\cap B_\varepsilon(x))}{m(B_\varepsilon(x))}
+ \leq1-\kappa\qquad\text{for every }x\in\T^d.
+\end{equation}
+
+\begin{conjecture}[Bressan's mixing-cost conjecture]\label{conj:Bressan}
+There are $c>0$ and $C\geq0$, depending only on $d$ and $\kappa$, such that every smooth incompressible flow satisfying~\eqref{eq:geometricmixing} obeys
+\begin{equation}\label{eq:bressan}
+ \int_0^T\|\nabla b(t)\|_{L^1}\dd t
+ \geq c\log\frac1\varepsilon-C.
+\end{equation}
+In the $BV$ formulation, $|D_xb(t)|(\T^d)$ replaces the gradient norm.
+\end{conjecture}
+The constants must be independent of the field, the completion time and the mixing scale. This rearrangement-cost problem~\cite{Bressan} differs from weak compactness for nearly incompressible flows~\cite{BianchiniBonicatto}. Asymptotic mixing estimates for periodic fields~\cite{BCJ} have a different order of quantifiers and may have a starting time depending on the field and initial datum.
+
+\subsection{Stability of a logarithmic transport cost}
+Here time periodicity is unnecessary. Let $b\in L^1(0,T;W^{1,p}(\T^d;\R^d))$ be divergence free, where $1<p\leq\infty$. For probability densities $f_0^+,f_0^-\in L^\infty$, set
+\[
+ \mu_t^\pm=(X_t)_\#(f_0^\pm m)=f_t^\pm m.
+\]
+For $\delta>0$, define
+\begin{equation}\label{eq:logcost}
+ \Phi_\delta(\mu,\nu)
+ =\inf_{\pi\in\Pi(\mu,\nu)}
+ \int_{\T^d\times\T^d}\log\left(1+\frac{d(x,y)}\delta\right)\dd\pi(x,y),
+\end{equation}
+where $\Pi(\mu,\nu)$ is the set of probability couplings with the indicated marginals. Logarithmic transport costs are used in mixing estimates by Seis~\cite{Seis}. The next theorem records the argument in a form suited to comparison with the entropy bounds.
+
+\begin{theorem}[Finite-time logarithmic transport estimate]\label{thm:logtransport}
+Let $p'=p/(p-1)$, with $p'=1$ for $p=\infty$. For $0\leq s\leq t\leq T$ and every $\delta>0$,
+\begin{equation}\label{eq:logtransport}
+ \begin{split}
+ \bigl|\Phi_\delta(\mu_t^+,\mu_t^-)-\Phi_\delta(\mu_s^+,\mu_s^-)\bigr|
+ \leq C_{d,p}\bigl(\|f_0^+\|_{p'}+\|f_0^-\|_{p'}\bigr)
+ \int_s^t\|\nabla b(\tau)\|_p\dd\tau.
+ \end{split}
+\end{equation}
+\end{theorem}
+\begin{proof}
+First suppose $b$ is smooth. The Sobolev difference estimate gives
+\begin{equation}\label{eq:hajlasz}
+ |b(\tau,x)-b(\tau,y)|
+ \leq C_d d(x,y)\bigl(M|\nabla b(\tau)|(x)+M|\nabla b(\tau)|(y)\bigr)
+\end{equation}
+on a full-measure set, where $M$ is the Hardy--Littlewood maximal operator~\cite{CrippaDeLellis}. Choose an optimal coupling $\pi_s$ at time $s$; it exists because the cost is continuous on a compact space. Transport it by
+\[
+ \pi_\tau=(X_{\tau,s}\times X_{\tau,s})_\#\pi_s.
+\]
+For the two transported trajectories, absolute continuity of distance yields
+\begin{align*}
+ \left|\frac{\dd}{\dd\tau}\log\left(1+\frac{d(x_\tau,y_\tau)}\delta\right)\right|
+ &\leq\frac{|b(\tau,x_\tau)-b(\tau,y_\tau)|}{\delta+d(x_\tau,y_\tau)}\\
+ &\leq C_d\bigl(M|\nabla b(\tau)|(x_\tau)+M|\nabla b(\tau)|(y_\tau)\bigr).
+\end{align*}
+Integration against the coupling uses only its marginals. H\"older's inequality and the $L^p$ bound for $M$ give an upper bound
+\[
+ C_{d,p}\|\nabla b(\tau)\|_p
+ \bigl(\|f_\tau^+\|_{p'}+\|f_\tau^-\|_{p'}\bigr).
+\]
+Incompressibility preserves these density norms. Integrating in time proves one direction of~\eqref{eq:logtransport}. Transporting an optimal coupling at time $t$ backward proves the reverse direction.
+
+For $p<\infty$, approximate the field strongly in $L^1_tW^{1,p}_x$ by smooth divergence-free fields. For $p=\infty$, use convolution, strong $L^1$ convergence and the uniform time-integrated Lipschitz bound. Flow stability gives weak convergence of the transported marginals. For fixed $\delta$, the bounded continuous cost makes optimal transport cost continuous under this convergence. The estimate follows by passage to the limit.
+\end{proof}
+
+\begin{corollary}[A transport-based logarithmic mixing bound]\label{cor:transportmixing}
+Let $f_0^+=2\mathbf1_{E_0}$ and $f_0^-=2\mathbf1_{E_0^c}$. If
+\[
+ \Phi_\varepsilon(\mu_T^+,\mu_T^-)\leq C_0,
+\]
+then
+\begin{equation}\label{eq:transportmixing}
+ \int_0^T\|\nabla b(t)\|_p\dd t
+ \geq c_{d,p}\log\frac1\varepsilon-C_{d,p,C_0}.
+\end{equation}
+\end{corollary}
+\begin{proof}
+The set $A=\{x:1/8\leq x_1\leq3/8\}$ has $\mu_0^+$-mass $1/2$ and is at torus distance at least $1/8$ from $E_0^c$. Every initial coupling must pair that mass with $E_0^c$, so
+\[
+ \Phi_\varepsilon(\mu_0^+,\mu_0^-)
+ \geq\frac12\log\left(1+\frac1{8\varepsilon}\right).
+\]
+Combine this bound with the terminal assumption and Theorem~\ref{thm:logtransport}.
+\end{proof}
+
+\subsection{The endpoint loss and the distinction between observables}
+The exponent restriction in the preceding estimate enters through
+\[
+ \|M|\nabla b|\|_{L^p}\leq C_{d,p}\|\nabla b\|_{L^p}.
+\]
+At $p=1$ only the weak-type tail remains:
+\begin{equation}\label{eq:weakone}
+ m\{M|\nabla b|>R\}\leq\frac{C_d}{R}\|\nabla b\|_1.
+\end{equation}
+Integrating this tail does not give a uniform $L^1$ bound. In a single shear, taking $\log(1+M|Da|)$ converts the weak tail into a strongly integrable one. In long-time flows or infinite compositions without strengthened summability, the corresponding costs accumulate.
+
+Geometric mixing in~\eqref{eq:geometricmixing} and the terminal hypothesis in Corollary~\ref{cor:transportmixing} are different observations. The former controls local proportions; the latter asks for a low-cost matching of the entire two-phase probability distribution. No equivalence between these observations is used here.
+
+Metric entropy introduces a further change of quantifiers, taking a supremum over partitions and a long-time limit. A finite-time estimate for one scalar therefore does not directly establish an entropy bound. Conversely, an endpoint Ruelle inequality does not directly supply the constants uniform in completion time required by Conjecture~\ref{conj:Bressan}. Heat-flow and quantitative-differentiation methods provide recent tools for studying related regularity estimates~\cite{BCDPJ}.
+
+\section{Bounded deformation, commutators and zero-strain rigidity}\label{sec:BD}
+\subsection{Why the symmetric derivative appears}
+A vector field $b\in L^1(\T^d;\R^d)$ belongs to $BD(\T^d)$ when its symmetric distributional derivative is a finite Radon measure. Write
+\begin{equation}\label{eq:BDsplit}
+ Eb=e_b\,m+E^sb,\qquad E^sb\perp m.
+\end{equation}
+The fine properties of $BD$ functions are developed in~\cite{ACDM}. At the $L^1$ endpoint, the full gradient cannot in general be controlled by the symmetric gradient, as expressed by Ornstein's non-inequality~\cite{Ornstein}.
+
+For a smooth variational equation $\dot v=\nabla b\,v$,
+\[
+ \frac{\dd}{\dd t}|v|^2=2\langle v,S_bv\rangle.
+\]
+Only strain contributes to instantaneous length change. A radial mollifier has an analogous effect on the transport commutator: it reads the strain in the separation direction.
+
+\subsection{A radial commutator estimate}
+Choose a nonnegative radial kernel $\eta\in C_c^\infty(B_{1/4})$ with $\int\eta=1$, and put $\eta_\varepsilon(z)=\varepsilon^{-d}\eta(z/\varepsilon)$. For $u\in L^\infty(\T^d)$ and divergence-free $b\in BD$, define
+\begin{equation}\label{eq:commutator}
+ r_\varepsilon[b,u]
+ =b\cdot\nabla(u*\eta_\varepsilon)-(b\cdot\nabla u)*\eta_\varepsilon,
+\end{equation}
+where $b\cdot\nabla u=\diver(bu)$ is distributional.
+
+\begin{lemma}[Radial strain bound]\label{lem:BDcommutator}
+There is a constant $C_\eta$, depending only on the kernel and dimension, such that
+\begin{equation}\label{eq:BDcommutator}
+ \|r_\varepsilon[b,u]\|_{L^1}
+ \leq C_\eta\|u\|_\infty |Eb|(\T^d)
+\end{equation}
+for every sufficiently small $\varepsilon>0$.
+\end{lemma}
+\begin{proof}
+Incompressibility gives
+\[
+ r_\varepsilon(x)=\int\nabla\eta_\varepsilon(z)\cdot
+ [b(x)-b(x-z)]u(x-z)\dd z.
+\]
+First take $b$ smooth. Since the kernel is radial, write $\nabla\eta_\varepsilon(z)=k_\varepsilon(|z|)z$. Then
+\begin{align*}
+ z\cdot[b(x)-b(x-z)]
+ &=\int_0^1z^{\mathsf T}Db(x-\theta z)z\dd\theta\\
+ &=\int_0^1z^{\mathsf T}Eb(x-\theta z)z\dd\theta.
+\end{align*}
+Thus
+\[
+ \|r_\varepsilon\|_1
+ \leq\|u\|_\infty\int|k_\varepsilon(|z|)|\,|z|^2\dd z\;\|Eb\|_1
+ =C_\eta\|u\|_\infty\|Eb\|_1.
+\]
+The kernel integral is independent of $\varepsilon$ by scaling.
+
+For general $b\in BD$, let $b_\delta=b*\eta_\delta$. Then $b_\delta\to b$ in $L^1$ and $\int|Eb_\delta|\dd m\leq|Eb|(\T^d)$. For fixed $\varepsilon$, the integral formula implies $r_\varepsilon[b_\delta,u]\to r_\varepsilon[b,u]$ in $L^1$. Passing to the limit proves the bound.
+\end{proof}
+
+\begin{proposition}[Renormalization with absolutely continuous strain]\label{prop:LDrenormalization}
+Suppose that $b\in L^\infty((0,T)\times\T^d;\R^d)$ is divergence free and
+\[
+ E_xb(t)=e_b(t,\cdot)\,m\quad\text{for a.e. }t,\qquad
+ e_b\in L^1((0,T)\times\T^d).
+\]
+If $u\in L^\infty$ is a distributional solution of $\partial_tu+b\cdot\nabla u=0$, then for every $\beta\in C^1(\R)$,
+\begin{equation}\label{eq:LDrenormalization}
+ \partial_t\beta(u)+b\cdot\nabla\beta(u)=0
+\end{equation}
+in distributions.
+\end{proposition}
+\begin{proof}
+We first show that $r_\varepsilon[b,u]\to0$ in space-time $L^1$. For the spatial mollification $b_\delta$, linearity and Lemma~\ref{lem:BDcommutator} give
+\[
+ \|r_\varepsilon[b,u]-r_\varepsilon[b_\delta,u]\|_{L^1_{t,x}}
+ \leq C_\eta\|u\|_\infty\|e_b-e_b*\eta_\delta\|_{L^1_{t,x}}.
+\]
+For fixed $\delta$, $\nabla b_\delta\in L^1_tL^\infty_x$. Moreover, since $\diver b_\delta=0$, the commutator formula allows $u(x-z)$ to be replaced by $u(x-z)-u(x)$. Translation continuity in $L^1$ and dominated convergence therefore yield
+\[
+ \lim_{\varepsilon\downarrow0}\|r_\varepsilon[b_\delta,u]\|_{L^1_{t,x}}=0.
+\]
+Let first $\varepsilon\downarrow0$, then $\delta\downarrow0$.
+
+With $u_\varepsilon=u*\eta_\varepsilon$, the equation becomes
+\[
+ \partial_tu_\varepsilon+b\cdot\nabla u_\varepsilon=r_\varepsilon[b,u].
+\]
+Its spatial smoothness and integrable weak time derivative justify the chain rule:
+\[
+ \partial_t\beta(u_\varepsilon)+b\cdot\nabla\beta(u_\varepsilon)
+ =\beta'(u_\varepsilon)r_\varepsilon[b,u].
+\]
+The $u_\varepsilon$ are uniformly bounded, so the right-hand side tends to zero in $L^1$. The left-hand side converges distributionally to~\eqref{eq:LDrenormalization}.
+\end{proof}
+
+This is the radial form of the transport-renormalization commutator mechanism~\cite{DL,Ambrosio}. The same approximation argument isolates the singular remainder. Under the boundedness and divergence assumptions above, but with general $E_xb(t)$ of integrable total variation,
+\begin{equation}\label{eq:singularremainder}
+ \limsup_{\varepsilon\downarrow0}\|r_\varepsilon[b,u]\|_{L^1_{t,x}}
+ \leq2C_\eta\|u\|_\infty\int_0^T|E^sb(t)|(\T^d)\dd t.
+\end{equation}
+Indeed,
+\[
+ |E(b-b_\delta)|(\T^d)
+ \leq\|e_b-e_b*\eta_\delta\|_1+2|E^sb|(\T^d).
+\]
+Thus the absolute-continuity argument leaves precisely the singular strain to be treated.
+
+\begin{conjecture}[Transport renormalization in $BD$]\label{conj:BD}
+For every divergence-free
+\[
+ b\in L^\infty((0,T)\times\T^d;\R^d)\cap L^1(0,T;BD(\T^d;\R^d)),
+\]
+every bounded distributional transport solution satisfies~\eqref{eq:LDrenormalization}.
+\end{conjecture}
+Here $L^1_tBD_x$ means integrability of the spatial $L^1$ norm and the total variation of $E_xb(t)$. The question differs from energy conservation for Euler solutions with bounded deformation~\cite{Inversi}: transport renormalization requires cancellation for an independently specified bounded transported quantity.
+
+\subsection{Rigidity when strain vanishes}
+\begin{theorem}[Zero-strain fields on the torus]\label{thm:zerostrain}
+If $b\in L^1(0,T;BD(\T^d;\R^d))$ and $E_xb=0$, then there exists $c\in L^1(0,T;\R^d)$ such that $b(t,x)=c(t)$ almost everywhere. The flow is
+\begin{equation}\label{eq:translationflow}
+ X_{t,s}(x)=x+\int_s^tc(\tau)\dd\tau\pmod{\Z^d}.
+\end{equation}
+In particular, if $b\in\B_d$ and $\action(b)=0$, then $h_m(F_b)=0$.
+\end{theorem}
+\begin{proof}
+Fix a time at which the spatial assumptions hold. For $k\in\Z^d\setminus\{0\}$, Fourier coefficients satisfy
+\[
+ k\otimes\widehat b(k)+\widehat b(k)\otimes k=0.
+\]
+Multiplication by $k$ gives $|k|^2\widehat b(k)+k(k\cdot\widehat b(k))=0$. Taking the scalar product with $k$ yields $k\cdot\widehat b(k)=0$, and hence $\widehat b(k)=0$. Only the constant Fourier mode remains. Space-time integrability gives $c\in L^1_t$ and~\eqref{eq:translationflow}.
+
+For $b\in\B_d$, the strain has trace zero. If $\action(b)=0$, then $\tr(S_b)_+=0$ almost everywhere, so $S_b=0$. The time-one map is a torus translation. Its derivative is the identity, and the classical Ruelle inequality yields zero entropy.
+\end{proof}
+
+Zero strain is sufficient for zero entropy but is not necessary. A nonconstant smooth shear has positive strain budget; nevertheless, its iterated differential grows only polynomially, and its metric entropy vanishes. The next section places this example within Hamiltonian dynamics.
+
+\section{Hamiltonian variational structure and periodic-orbit growth}\label{sec:Hamilton}
+
+\subsection{From strain to a symplectic cocycle}
+On the standard symplectic torus $\T^{2n}$, set
+\[
+ J=\begin{pmatrix}0&I_n\\-I_n&0\end{pmatrix},\qquad
+ b(t,z)=J\nabla H(t,z),\qquad
+ H\in L^1(\R/\Z;W^{2,1}(\T^{2n})).
+\]
+Since $D^2H$ is symmetric, $\diver b=\tr(JD^2H)=0$. Hence $b\in\B_{2n}$, and the variational coefficient and strain are
+\begin{equation}\label{eq:hamiltonmatrix}
+ A(t,x)=JD^2H(t,X_t(x)),\qquad
+ S_b=\frac{JD^2H-D^2H\,J}{2}.
+\end{equation}
+
+\begin{proposition}[Symplecticity with an integrable Hessian]\label{prop:symplectic}
+For the Hamiltonian field above, the variational matrix satisfies
+\[
+ W_t(x)^{\mathsf T}JW_t(x)=J
+\]
+for almost every $x$ and every $t$. Its Lyapunov exponents occur in pairs and can be arranged as
+\[
+ \lambda_1\geq\cdots\geq\lambda_n\geq0
+ \geq-\lambda_n\geq\cdots\geq-\lambda_1.
+\]
+Moreover,
+\begin{equation}\label{eq:hamiltonbudget}
+ \Lambda(b)\leq
+ \int_0^1\!\int_{\T^{2n}}
+ \tr\!\left[\left(\frac{JD^2H-D^2H\,J}{2}\right)_+\right]\dd m\dd t.
+\end{equation}
+\end{proposition}
+\begin{proof}
+Fix a trajectory along which the coefficient is integrable, and write $Q=D^2H(t,X_t(x))$. The identities $Q^{\mathsf T}=Q$, $J^{\mathsf T}=-J$ and $J^2=-I$ imply
+\[
+ (JQ)^{\mathsf T}J+J(JQ)=Q-Q=0.
+\]
+The product rule for absolutely continuous matrices therefore gives
+\[
+ \frac{\dd}{\dd t}(W_t^{\mathsf T}JW_t)
+ =W_t^{\mathsf T}(A^{\mathsf T}J+JA)W_t=0.
+\]
+The initial value is $J$, so $W_t$ is symplectic. Since
+\[
+ W_t^{-1}=-JW_t^{\mathsf T}J
+\]
+and $J$ is orthogonal, $W_t^{-1}$ and $W_t$ have the same singular-value multiset. The singular values of an inverse are also the reciprocals of the original singular values. Thus the singular values of $W_t$ occur in reciprocal pairs. Taking logarithms, dividing by integer time and applying the multiplicative ergodic theorem yields the pairing of exponents. Finally, substitute~\eqref{eq:hamiltonmatrix} into Proposition~\ref{prop:strain}.
+\end{proof}
+
+Whenever Conjecture~\ref{conj:ERI} holds for $b=J\nabla H$, the right-hand side of~\eqref{eq:hamiltonbudget} also bounds $h_m(\phi_H^1)$. This is the Hamiltonian form of the critical entropy question: an integrable Hessian supplies a finite budget for linearized volume growth. If this budget vanishes, Theorem~\ref{thm:zerostrain} gives $J\nabla H=c(t)$. The spatial mean of a periodic gradient is zero, so $c(t)=0$. Consequently, a zero-strain Hamiltonian field on the standard torus is generated by a Hamiltonian independent of space.
+
+\subsection{The quantifiers in primitive-periodic counting}
+To discuss periodic trajectories, we now work with a smooth Hamiltonian on a closed symplectic manifold $(M,\omega)$. Let $F=\phi_H^1$. The primitive orbit through a periodic point $x$ is
+\[
+ \mathcal O(x)=\{x,Fx,\ldots,F^{q-1}x\},\qquad
+ q=\min\{j\geq1:F^jx=x\}.
+\]
+Define
+\begin{equation}\label{eq:periodcount}
+ P_F(N)=\#\{\mathcal O(x):q(x)\leq N\}.
+\end{equation}
+Different starting points on the same orbit contribute only once. If a bounded range of periods already contains infinitely many geometric orbits, the count is $+\infty$.
+
+\begin{conjecture}[Primitive-periodic growth dichotomy]\label{conj:periodic}
+For every Hamiltonian diffeomorphism $F$ of a closed symplectic manifold, either the total number of primitive periodic orbits is finite, or
+\begin{equation}\label{eq:periodgrowth}
+ \liminf_{N\to\infty}\frac{\log P_F(N)}{\log N}\geq2.
+\end{equation}
+\end{conjecture}
+This is the question of Albach, Hryniewicz and Oancea in~\cite[Problem 1 in their contribution]{OpenProblems2026}. The lower bound concerns a logarithmic growth exponent. It is weaker than the existence of $c>0$ with $P_F(N)\geq cN^2$; for example, $N^2/\log N$ has logarithmic growth exponent two. The substantive counting issue is especially visible when $P_F(N)$ is finite for each finite $N$, since new primitive orbits must then be distinguished from iterates of existing ones.
+
+Local linearization associates symplectic matrices and iteration data with periodic points. Geometric counting additionally involves global connections, topology and resonance. The following integrable example makes this distinction explicit.
+
+\subsection{Quadratic resonance growth in a zero-entropy twist}
+Consider the smooth integrable twist on the compact annulus $\mathcal A=\T\times[I_-,I_+]$,
+\begin{equation}\label{eq:twist}
+ F(\theta,I)=(\theta+\omega(I),I),
+\end{equation}
+where $\omega$ is strictly monotone and the interior of its range is $(\alpha,\beta)$, with $\alpha<\beta$. Each circle $I=\mathrm{const}$ is invariant, and
+\[
+ DF^N(\theta,I)=
+ \begin{pmatrix}1&N\omega'(I)\\0&1\end{pmatrix}.
+\]
+All Lyapunov exponents vanish. The smooth Ruelle inequality yields zero metric entropy with respect to normalized area. If $\omega(I)=p/q$ is a reduced rational number, every point of that circle has least period $q$.
+
+\begin{proposition}[Counting resonant invariant circles]\label{prop:resonance}
+Let $R(N)$ be the number of invariant circles in~\eqref{eq:twist} whose rotation number is a reduced fraction $p/q\in(\alpha,\beta)$ with $1\leq q\leq N$. Then
+\begin{equation}\label{eq:farey}
+ R(N)=\frac{3}{\pi^2}(\beta-\alpha)N^2
+       +O_{\alpha,\beta}(N\log N).
+\end{equation}
+\end{proposition}
+\begin{proof}
+Strict monotonicity reduces the question to counting reduced fractions. Denote the number-theoretic M\"obius function by $\mu_{\rm ar}$. Using
+\[
+ \mathbf1_{\gcd(p,q)=1}=\sum_{d\mid p,\ d\mid q}\mu_{\rm ar}(d),
+\]
+we obtain
+\begin{align*}
+ R(N)
+ &=\sum_{d\leq N}\mu_{\rm ar}(d)
+   \sum_{k\leq N/d}\#\{\ell\in\Z:\alpha k<\ell<\beta k\}\\
+ &=\frac{\beta-\alpha}{2}N^2
+   \sum_{d\leq N}\frac{\mu_{\rm ar}(d)}{d^2}
+   +O_{\alpha,\beta}\!\left(N\sum_{d\leq N}\frac1d\right).
+\end{align*}
+For each $k$, the integer count is $(\beta-\alpha)k+O(1)$; rounding the summation limit produces an error of the displayed order. The Euler product gives
+\[
+ \sum_{d=1}^{\infty}\frac{\mu_{\rm ar}(d)}{d^2}
+ =\prod_{p\ {\rm prime}}(1-p^{-2})
+ =\frac1{\zeta(2)}=\frac6{\pi^2}.
+\]
+The omitted tail is bounded absolutely by $\sum_{d>N}d^{-2}=O(N^{-1})$. Substitution proves~\eqref{eq:farey}.
+\end{proof}
+
+Proposition~\ref{prop:resonance} counts resonant circles, not the primitive orbits in~\eqref{eq:periodcount}. A single rational-rotation circle already contains infinitely many primitive periodic orbits. The example identifies an arithmetic source of quadratic resonance growth without reducing the isolated-orbit problem to a count of rational numbers.
+
+The separation between entropy and periodic counting also occurs on a closed symplectic torus. Take
+\[
+ H(x,y)=-\frac{a}{2\pi}\cos(2\pi y),\qquad0<a<\frac12.
+\]
+Its time-one map is the smooth Hamiltonian shear
+\begin{equation}\label{eq:hamiltonshear}
+ F(x,y)=(x+a\sin(2\pi y),y).
+\end{equation}
+Here $h_m(F)=0$, but every point on $y=0$ and $y=1/2$ is fixed, so $P_F(1)=\infty$. Thus a bound on positive Lyapunov exponents controls a typical information rate without determining the number of periodic trajectories.
+
+\section{Invariant graphs and rigidity for periodic Newton equations}\label{sec:Newton}
+
+\subsection{Complete graph foliations at high momentum}
+Let $V\in C^\infty(\T^2)$. On the extended phase space $\T_u\times\R_p\times\T_t$, consider
+\begin{equation}\label{eq:newtonfield}
+ Z=\partial_t+p\partial_u-V_u(u,t)\partial_p.
+\end{equation}
+This is the autonomous extension of the equations generated by $H(u,p,t)=\tfrac12p^2+V(u,t)$. Since the Hamiltonian depends on time, its instantaneous value is not generally conserved. We formulate integrability at infinity using large $|p|$.
+
+\begin{definition}[Smooth complete graph foliation at infinity]\label{def:highfoliation}
+Let $\mathcal U$ be a $Z$-invariant open set containing $\{|p|>R\}$ for some $R>0$. The system admits a smooth complete graph foliation at infinity if $\mathcal U$ is foliated by invariant graphs
+\[
+ \Gamma_c=\{(u,P(c,u,t),t):(u,t)\in\T^2\},
+\]
+where the parameter $c$ ranges over two end intervals, $P$ is jointly $C^2$, and the parameters can be oriented so that $\partial_cP>0$. Completeness means that the graphs cover all of $\mathcal U$, rather than only a Cantor subfamily of parameters.
+\end{definition}
+
+\begin{problem}[Classification at infinity]\label{prob:newton}
+Classify periodic Newton potentials whose equations are totally integrable at infinity. In particular, classify the smooth graph class in Definition~\ref{def:highfoliation}.
+\end{problem}
+
+Bialy explicitly asks the general classification question in~\cite[Question 3 in his contribution]{OpenProblems2026}. Global no-conjugate-point rigidity and rigidity at infinity are studied in~\cite{BialyPolterovich,BialyInfinity}. For higher-dimensional Newton equations, Huang resolves the two-dimensional case left open in Bialy's rigidity-at-infinity theorem~\cite{Huang}. The present equation has one spatial coordinate and a periodic forcing variable. Its nontrivial travelling-wave examples give it a different classification problem.
+
+\subsection{Invariant graphs, calibration and the Riccati equation}
+A graph $p=P(u,t)$ is invariant precisely when
+\begin{equation}\label{eq:burgers}
+ P_t+PP_u+V_u=0.
+\end{equation}
+This forced Burgers equation is also the compatibility condition for trajectories on the graph. Writing $r=P_u$ and differentiating in $u$ gives
+\begin{equation}\label{eq:leafriccati}
+ (\partial_t+P\partial_u)r+r^2+V_{uu}=0.
+\end{equation}
+For an oriented family of graphs, write $P_c(u,t)=P(c,u,t)$ and $\rho_c=\partial_cP>0$. Differentiation with respect to $c$ gives
+\begin{equation}\label{eq:leafdensity}
+ (\rho_c)_t+\partial_u(P_c\rho_c)=0.
+\end{equation}
+Thus each graph carries a natural positive invariant density on the space-time torus. Multiply~\eqref{eq:leafriccati} by $\rho_c$ and integrate over $\T^2$. Equation~\eqref{eq:leafdensity} removes the transport term and yields
+\begin{equation}\label{eq:weightedriccati}
+ \int_{\T^2}\rho_c\bigl((P_c)_u^2+V_{uu}\bigr)\dd u\dd t=0.
+\end{equation}
+The first term is nonnegative. The second has a graph-dependent weight, so the unweighted identity $\int_{\T}V_{uu}\dd u=0$ does not cancel it.
+
+\begin{lemma}[Calibration by an invariant graph]\label{lem:calibration}
+If $P\in C^1(\T^2)$ satisfies~\eqref{eq:burgers}, then there are constants $c,\bar H$ and a periodic $S\in C^2(\T^2)$ such that
+\begin{equation}\label{eq:HJgraph}
+ P=c+S_u,\qquad S_t+\frac12(c+S_u)^2+V=\bar H.
+\end{equation}
+For every absolutely continuous lifted curve $u:[t_0,t_1]\to\R$,
+\begin{align}\label{eq:calibration}
+ \int_{t_0}^{t_1}\left(\frac12\dot u^2-V(u,t)\right)\dd t
+ &\geq c\bigl(u(t_1)-u(t_0)\bigr)\notag\\
+ &\quad+S(u(t_1),t_1)-S(u(t_0),t_0)
+       -\bar H(t_1-t_0).
+\end{align}
+Equality holds if and only if $\dot u=P(u,t)$ almost everywhere.
+\end{lemma}
+\begin{proof}
+The one-form
+\[
+ \alpha=P\dd u-\left(\frac12P^2+V\right)\dd t
+\]
+is closed by~\eqref{eq:burgers}. A closed one-form on the torus is the sum of a constant one-form and an exact form, so
+\[
+ \alpha=c\dd u-\bar H\dd t+\dd S.
+\]
+Comparison of coefficients gives~\eqref{eq:HJgraph}. Completing the square,
+\[
+ \frac12v^2-V-\bigl(cv+S_uv+S_t-\bar H\bigr)=\frac12(v-P)^2.
+\]
+Integrating this identity along the curve proves both the inequality and the equality criterion. If the kinetic action is infinite, the inequality holds in the extended-real sense.
+\end{proof}
+
+Consequently, trajectories on an invariant graph minimize action among curves with the same lifted endpoints and elapsed time. Calibration connects the graph structure with variational stability, while~\eqref{eq:leafriccati} expresses its infinitesimal consequences.
+
+\subsection{Classification of quadratic momentum integrals}
+Polynomial momentum integrals already reveal the rigidity mechanism in an algebraic form. In a related reduction of the Benney chain, Bialy proves that a quartic integral forces a travelling-wave structure~\cite{BialyBenney}. We give the full coefficient calculation for the quadratic class. The polynomial-degree hypothesis is explicit and no graph foliation is assumed in advance.
+
+\begin{theorem}[Quadratic integrals and travelling-wave potentials]\label{thm:quadratic}
+Let $V\in C^\infty(\T^2)$. Suppose
+\begin{equation}\label{eq:quadraticintegral}
+ I(u,p,t)=A(u,t)p^2+B(u,t)p+C(u,t),
+ \qquad A,B,C\in C^2(\T^2),\quad A\not\equiv0,
+\end{equation}
+satisfies $ZI=0$ for every $(u,t)$ and all sufficiently large positive $p$. Then $A$ and $B$ are constants, $A\ne0$, and one of the following alternatives holds:
+\begin{enumerate}
+\item $V$ depends only on time;
+\item there exist coprime integers $m,n$, with $n\geq1$, and $V_0,Q\in C^\infty(\T)$ such that
+\begin{equation}\label{eq:travelpotential}
+ V(u,t)=V_0(nu+mt)+Q(t),\qquad \frac B{2A}=\frac mn.
+\end{equation}
+\end{enumerate}
+In the second case, scaling $I$ by a nonzero constant and adding a constant yields
+\begin{equation}\label{eq:travelfirstintegral}
+ K(u,p,t)=\frac12\left(p+\frac mn\right)^2+V_0(nu+mt).
+\end{equation}
+Conversely, every potential of the form~\eqref{eq:travelpotential} admits the integral~\eqref{eq:travelfirstintegral} and a smooth complete graph foliation at infinity.
+\end{theorem}
+\begin{proof}
+The expression $ZI$ is a cubic polynomial in $p$ and vanishes on a half-line. Each coefficient is therefore zero:
+\begin{align}
+ A_u&=0,\label{eq:quad1}\\
+ A_t+B_u&=0,\label{eq:quad2}\\
+ B_t+C_u-2AV_u&=0,\label{eq:quad3}\\
+ C_t-BV_u&=0.\label{eq:quad4}
+\end{align}
+Equation~\eqref{eq:quad1} gives $A=A(t)$. Integrating~\eqref{eq:quad2} in $u$ gives $A_t=0$, so $A$ is a nonzero constant and then $B_u=0$. Integrating~\eqref{eq:quad3} in $u$ gives $B_t=0$. Hence $B$ is constant and
+\[
+ C(u,t)=2AV(u,t)+D(t).
+\]
+Substituting into~\eqref{eq:quad4} and writing $c=B/(2A)$ yields
+\begin{equation}\label{eq:travelpde}
+ V_t-cV_u=-\frac{D'(t)}{2A}.
+\end{equation}
+Let $Q(t)=\int_{\T}V(u,t)\dd u$. Spatial averaging gives $Q'=-D'/(2A)$. Therefore $U=V-Q$ solves $U_t-cU_u=0$, and
+\[
+ U(u,t)=W(u+ct)
+\]
+for a smooth periodic function $W$. If $W$ is constant, $V$ depends only on time. Otherwise some Fourier coefficient $\widehat W(k)$ with $k\ne0$ is nonzero. Time periodicity implies $e^{2\pi i kc}=1$, and hence $c=m/n\in\mathbb Q$ in lowest terms, with $n\geq1$. Since $W$ has periods $1$ and $m/n$, B\'ezout's identity implies that $1/n$ is also a period. We can write $W(s)=V_0(ns)$, obtaining~\eqref{eq:travelpotential}.
+
+Since $D+2AQ$ is constant, the integral can be rewritten as
+\[
+ I=2A\left[\frac12(p+c)^2+V_0(nu+mt)\right]+\mathrm{constant}.
+\]
+This proves the stated normal form. Conversely, direct differentiation gives
+\[
+ ZK=-(p+m/n)nV_0'+(np+m)V_0'=0.
+\]
+For $E>\max V_0$, the two components of $K=E$ are
+\begin{equation}\label{eq:travelgraphs}
+ P_E^\pm(u,t)=-\frac mn
+ \pm\sqrt{2\bigl(E-V_0(nu+mt)\bigr)}.
+\end{equation}
+They are smooth, invariant and pairwise disjoint. Restricting to $E>E_*>\max V_0$ gives a foliation of the invariant open set $\{K>E_*\}$, which contains all sufficiently large $|p|$. Reversing the parameter orientation on the negative branch gives the positivity required in Definition~\ref{def:highfoliation}.
+\end{proof}
+
+The time-dependent term $Q(t)$ does not enter the force $-V_u$ and represents a time gauge in the Lagrangian. The case $m=0,n=1$ contains all autonomous periodic potentials. For $m\ne0$, a moving coordinate transforms the system into autonomous mechanics. Travelling-wave examples are consistent with the integrability-at-infinity phenomena in~\cite{BialyInfinity,OpenProblems2026}; Theorem~\ref{thm:quadratic} characterizes this family within the quadratic-integral class.
+
+\begin{conjecture}[Quadratic lifting of complete high-momentum graphs]\label{conj:quadraticlift}
+Every periodic Newton equation satisfying Definition~\ref{def:highfoliation} admits a nondegenerate quadratic momentum integral of the form in Theorem~\ref{thm:quadratic}.
+\end{conjecture}
+This is a precise positive formulation of travelling-wave rigidity for the smooth graph class, motivated by the classification question and the polynomial-integral results~\cite{OpenProblems2026,BialyBenney}. Theorem~\ref{thm:quadratic} identifies its conclusion with a travelling-wave classification. The unresolved implication is from a complete graph foliation to an integral of finite polynomial degree. A KAM Cantor family does not satisfy completeness, and a formal expansion in inverse powers of $p$ does not by itself produce a globally defined integral.
+
+\subsection{Hopf-type rigidity for a global smooth foliation}
+A complete foliation over all momenta gives a stronger conclusion. In this case the Riccati equation closes into a rigidity argument. The proof below is a direct implementation of the Hopf-type mechanism in~\cite{BialyPolterovich} under a global smooth graph hypothesis.
+
+\begin{theorem}[Global smooth graph rigidity]\label{thm:globalrigidity}
+Suppose $P\in C^2(\R_c\times\T^2)$ satisfies the following conditions: each graph $p=P(c,u,t)$ is $Z$-invariant; $\partial_cP>0$; and, for each $(u,t)$, the map $c\mapsto P(c,u,t)$ maps $\R$ onto $\R$. Then $V_u\equiv0$. Conversely, if $V$ depends only on time, the horizontal graphs $p=c$ give such a foliation.
+\end{theorem}
+\begin{proof}
+The inverse function theorem gives a globally defined $C^2$ parameter function $c=c(u,p,t)$. Define
+\[
+ r(u,p,t)=P_u(c(u,p,t),u,t).
+\]
+The leaf parameter is constant along trajectories, so~\eqref{eq:leafriccati} becomes an identity on the entire extended phase space:
+\begin{equation}\label{eq:globalriccati}
+ Zr+r^2+V_{uu}=0.
+\end{equation}
+Set $K=\|V_{uu}\|_\infty$. Since $V_u$ is bounded, every Newton trajectory is complete in both time directions. Along such a trajectory,
+\[
+ \dot r=-r^2-q(t),\qquad |q(t)|\leq K.
+\]
+A solution defined for all time must satisfy $|r|\leq\sqrt K$. Indeed, if $r< -\sqrt K$ at some time, comparison with $\dot y=K-y^2$ gives finite-time blow-up in the positive direction. If $r>\sqrt K$, the same argument applied after time reversal to $-r$ gives blow-up in the negative direction. The case $K=0$ follows from the same comparison. Thus $r$ is bounded throughout extended phase space.
+
+Choose $\chi\in C_c^\infty(\R)$ with $0\leq\chi\leq1$, equal to one on $[-1,1]$ and zero outside $[-2,2]$, and put $\chi_R(p)=\chi(p/R)$. Since $\diver Z=0$, multiplying~\eqref{eq:globalriccati} by $\chi_R$ and integrating over $\T^2\times\R$ gives
+\begin{equation}\label{eq:hopfcutoff}
+ \int\chi_Rr^2\dd u\dd p\dd t
+ =-\int rV_u\chi_R'\dd u\dd p\dd t.
+\end{equation}
+Spatial periodicity gives $\int\chi_RV_{uu}=0$. The absolute value of the right-hand side is bounded by
+\[
+ \sqrt K\,\|V_u\|_\infty\|\chi_R'\|_{L^1(\R)}
+ =\sqrt K\,\|V_u\|_\infty\|\chi'\|_1,
+\]
+uniformly in $R$. Fatou's lemma implies $r\in L^2(\T^2\times\R)$. Applying Cauchy--Schwarz to~\eqref{eq:hopfcutoff} now gives
+\[
+ \left|\int rV_u\chi_R'\right|
+ \leq \|V_u\|_\infty\|r\|_2\|\chi_R'\|_2
+ =R^{-1/2}\|V_u\|_\infty\|r\|_2\|\chi'\|_2
+ \longrightarrow0.
+\]
+Dominated convergence sends the left-hand side of~\eqref{eq:hopfcutoff} to $\int r^2$. Hence $r=0$, and~\eqref{eq:globalriccati} gives $V_{uu}=0$. Periodicity then yields $V_u=0$. The converse follows from $\dot p=0$.
+\end{proof}
+
+The difference between global and high-momentum foliations appears at the inner boundary of the integration region. Integrating only over the foliated ends leaves Riccati flux terms at finite momentum. Sending the outer cutoff to infinity does not remove those terms. Travelling-wave potentials retain precisely the possibility of a nontrivial interior region. A classification at infinity must therefore identify which inner-boundary fluxes can coexist with complete invariant graphs at every sufficiently large momentum.
+
+The weighted identity~\eqref{eq:weightedriccati} and the calibration formula~\eqref{eq:calibration} give complementary formulations of Conjecture~\ref{conj:quadraticlift}. The former imposes second-order relations across the leaf family; the latter makes high-momentum trajectories action-minimizing. A rigidity proof would need to turn these relations into common restrictions on the Fourier modes of $V$. A counterexample would require a non-travelling potential with a complete high-momentum foliation, rather than a large-measure collection of invariant graphs.
+
+\section{Relations between deformation, complexity and rigidity}\label{sec:relations}
+
+\subsection{Common structures and distinct global information}
+The preceding arguments give two directions of inference. The analytic direction starts with $Db$ or $Eb$ and seeks flow, variational and information estimates. The geometric direction starts with the organization of trajectories and restricts the Hamiltonian. These directions meet in first-order deformation, symplectic variational equations and Riccati identities, but their conclusions are not interchangeable.
+
+Within $\B_d$, the proved implications are
+\begin{equation}\label{eq:logicentropy}
+ \begin{gathered}
+ b_n\to b\text{ in }\X_d
+ \ \Longrightarrow\ L_q(b_n)\to L_q(b)\quad(q\in\N)\\
+ \Longrightarrow\ \limsup_n\Lambda(b_n)\leq\Lambda(b),\\[3pt]
+ \text{scale-controlled stationary joinings}
+ \ \Longrightarrow\ \text{entropy recovery}\\
+ \Longrightarrow\ h_m(F_b)\leq\Lambda(b)\leq\action(b).
+ \end{gathered}
+\end{equation}
+The first condition on the second line is the explicit sufficient condition in Proposition~\ref{prop:joinrec}. Finite-time trajectory stability under strong Sobolev convergence does not supply that long-time statistical condition.
+
+For bounded divergence-free fields, the radial commutator proves
+\begin{equation}\label{eq:logicbd}
+ \begin{gathered}
+ E_xb=e_bm,\quad e_b\in L^1_{t,x}\\
+ \Longrightarrow\quad
+ \text{renormalization of bounded transport solutions}.
+ \end{gathered}
+\end{equation}
+The general $BD$ question is concentrated in the singular measure $E^sb$. At zero strain, one has the rigidity statement
+\[
+ E_xb=0\text{ on the torus}
+ \quad\Longrightarrow\quad
+ \text{a spatial translation flow}.
+\]
+This has a parallel in the Newton setting. The zero-strain argument starts with a vanishing deformation tensor. The global graph argument instead uses a Riccati identity along every trajectory to force the integral of a nonnegative square to vanish.
+
+In the algebraic class of periodic Newton equations, Theorem~\ref{thm:quadratic} gives
+\begin{equation}\label{eq:logicnewton}
+ \begin{gathered}
+ \text{a nondegenerate quadratic momentum integral}\\
+ \Longleftrightarrow\quad V=V_0(nu+mt)+Q(t)\\
+ \Longrightarrow\quad\text{a complete high-momentum graph foliation}.
+ \end{gathered}
+\end{equation}
+Time-only potentials are included by taking $V_0$ constant. Conjecture~\ref{conj:quadraticlift} asks for the converse of the final implication. A global graph foliation, in contrast, is already characterized by Theorem~\ref{thm:globalrigidity}: it occurs precisely when $V_u=0$.
+
+Periodic counting does not enter the conclusions of~\eqref{eq:logicentropy}. The closed Hamiltonian example~\eqref{eq:hamiltonshear} has zero entropy and infinitely many fixed points, while Proposition~\ref{prop:resonance} gives quadratic resonance growth with zero Lyapunov exponents. Reducing Conjecture~\ref{conj:periodic} to a universal positive-entropy statement would discard integrable systems that belong to its scope. Any general counting mechanism must retain resonances that do not cause exponential orbit separation.
+
+\subsection{Invariant decompositions do not create an additional entropy defect}
+A natural test of the endpoint entropy problem places increasingly complex motions in disjoint invariant regions. The following elementary inheritance principle shows why that construction cannot exceed spectral bounds already valid on the individual regions.
+
+\begin{proposition}[Spectral entropy bounds under invariant decomposition]\label{prop:cells}
+Let $b\in\B_d$ and $F=F_b$. Suppose pairwise disjoint $F$-invariant measurable sets $E_j$ have full-measure union. Put $p_j=m(E_j)>0$ and $m_j=m|_{E_j}/p_j$. If
+\[
+ h_{m_j}(F|_{E_j})\leq\int_{E_j}\sum_i\lambda_i^+\dd m_j
+\]
+for every $j$, then $h_m(F)\leq\Lambda(b)$.
+\end{proposition}
+\begin{proof}
+Metric entropy is affine under countable decompositions into invariant probability measures~\cite{Walters,KatokHasselblatt}. Thus, with all quantities interpreted as extended nonnegative real numbers,
+\[
+ h_m(F)=\sum_jp_jh_{m_j}(F|_{E_j})
+ \leq\sum_j\int_{E_j}\sum_i\lambda_i^+\dd m
+ =\Lambda(b).
+\]
+The region label is invariant under iteration and contributes no additional information per unit time.
+\end{proof}
+
+Even if the static Shannon entropy of the region labels is infinite, it does not create an entropy rate. Consequently, a counterexample to Conjecture~\ref{conj:ERI} cannot be obtained merely by packing faster smooth dynamics into smaller mutually invariant cells while keeping the total deformation cost finite. A relevant multiscale mechanism must act repeatedly on typical trajectories. The infinite-switching class with only $\sum_jV_j<\infty$ leaves room for that repeated interaction between scales.
+
+\subsection{Consequences for applied mathematical systems}
+For a nondiffusive passive scalar,
+\[
+ \partial_t\rho+b\cdot\nabla\rho=0,\qquad
+ \rho(t,\cdot)=\rho_0\circ X_t^{-1},
+\]
+a finite observational partition $\PP$ encodes a trajectory by $\PP(F_b^jx)$. Whenever the endpoint Ruelle inequality holds,
+\begin{equation}\label{eq:informationcost}
+ h_m(F_b,\PP)\leq\Lambda(b)\leq\action(b).
+\end{equation}
+The typical symbolic information produced in one forcing period cannot exceed the integrated strain budget for that period. This applies directly to the Sobolev shear flows covered by Section~\ref{sec:shears}; finite $BV$ shear compositions instead have the explicit absolutely continuous variation bound in Theorem~\ref{thm:finiteshear}. For the full critical Sobolev class,~\eqref{eq:informationcost} is the consequence sought in Conjecture~\ref{conj:ERI}.
+
+Mixing cost describes a different control objective: moving a prescribed distribution to a prescribed scale. Theorem~\ref{thm:logtransport} bounds the decrease of a logarithmic transport cost. Unlike~\eqref{eq:informationcost}, it requires neither periodic forcing nor an infinite-time limit, but it imposes explicit assumptions on the transported densities. The two estimates concern, respectively, typical trajectory information and finite-time matching of material distributions.
+
+Infinite switching supplies a control limit with finite total deformation cost. Truncated controls converge strongly in the Sobolev norm, and their trajectories converge on finite time intervals. Theorem~\ref{thm:spectral} controls the limiting direction of the integrated positive spectrum. Entropy recovery asks whether the long-time information of the limiting control can be retained by smooth realizations. This is a distinction between finite-time approximation and asymptotic dynamics, rather than an ordinary short-time state-error estimate.
+
+Hamiltonian systems provide mechanical examples of both directions. The Hessian budget~\eqref{eq:hamiltonbudget} bounds unstable variational growth, whereas Theorem~\ref{thm:quadratic} recovers the admissible forcing from an exact conserved quantity. In the travelling-wave case, the moving frame reduces the dynamics to an autonomous system. Complexity control and exact reduction are therefore consequences of different, explicitly specified structures.
+
+\subsection{Nonautonomous backgrounds and the remaining transitions}
+Periodic forcing supplies a fixed invariant reference measure and a common statistical unit for every period. For a more general probability-preserving base system $(\Omega,\mathbb P,\theta)$, the natural object is a skew product
+\[
+ \mathcal F(\omega,x)=(\theta\omega,F_\omega x).
+\]
+Spatial strain should then be compared with the entropy relative to the base, not with the total entropy of the skew product. Even when every $F_\omega$ is the identity, the environment may carry positive entropy. That contribution is not generated by the spatial variational matrix. Relative entropy separates these sources of information~\cite{Walters}.
+
+Each of the five questions now has a distinct unresolved transition: from critical linearization to long-time coding; from $L^1$ derivative cost to finite-time rearrangement; from singular strain to cancellation for arbitrary transported data; from symplectic iteration to accumulated primitive-orbit counts; and from complete high-momentum graphs to a finite-degree first integral. Their possible counterexamples also have different requirements. An entropy counterexample must realize $h_m(F_b)>\Lambda(b)$ for a single field with finite deformation budget. A counterexample to quadratic lifting must produce a complete high-momentum foliation for a non-travelling potential. Neither task is replaced by finite-stage complexity or by a large but incomplete family of regular trajectories.
+
+\section{Conclusion}
+Local deformation and global orbit organization provide a common perspective on low-regularity transport, metric entropy, finite-time mixing and Hamiltonian rigidity. Continuity of finite-time exterior-power growth gives upper semicontinuity of the integrated positive spectrum in the strong critical Sobolev topology. Stationary joinings give a scale-sensitive sufficient criterion for entropy recovery, while shear models isolate the role of summability in repeated rearrangement. Radial commutators identify the separate contributions of absolutely continuous and singular strain to transport renormalization.
+
+In the geometric branch, symplecticity preserves exponent pairing, but resonance and periodic counting carry information not contained in linearized exponential growth. Quadratic momentum integrals characterize travelling-wave Newton potentials, and global graph rigidity separates a foliation over all momenta from one that exists only at infinity. The resulting perspective does not seek a single invariant that replaces all others. It identifies the hypotheses and intermediate structures needed for each passage from local differential control to a global dynamical conclusion, and for the reverse passage from ordered trajectories to the equation generating them.
+
+% Bibliography generated with the official elsarticle-num style.
+% BEGIN EMBEDDED BIBLIOGRAPHY
+\clearpage
+\begingroup
+\interlinepenalty=10000
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{DL}
+R.~J. DiPerna, P.-L. Lions, Ordinary differential equations, transport theory
+  and {Sobolev} spaces, Inventiones Mathematicae 98 (1989) 511--547.
+\newblock \href {https://doi.org/10.1007/BF01393835}
+  {\path{doi:10.1007/BF01393835}}.
+
+\bibitem{Ambrosio}
+L.~Ambrosio, Transport equation and {Cauchy} problem for {BV} vector fields,
+  Inventiones Mathematicae 158 (2004) 227--260.
+\newblock \href {https://doi.org/10.1007/s00222-004-0367-2}
+  {\path{doi:10.1007/s00222-004-0367-2}}.
+
+\bibitem{LeBrisLions}
+C.~Le~Bris, P.-L. Lions, Renormalized solutions of some transport equations
+  with partially {$W^{1,1}$} velocities and applications, Annali di Matematica
+  Pura ed Applicata 183 (2004) 97--130.
+\newblock \href {https://doi.org/10.1007/s10231-003-0082-4}
+  {\path{doi:10.1007/s10231-003-0082-4}}.
+
+\bibitem{BCJ}
+E.~Bru{\'e}, M.~Colombo, C.~J.~P. Johansson, Lyapunov exponents, entropy and
+  mixing for {DiPerna-Lions} flows, version 1 (2025).
+\newblock \href {https://arxiv.org/abs/2510.02921v1}
+  {\path{arXiv:2510.02921v1}}.
+
+\bibitem{Bressan}
+A.~Bressan, A lemma and a conjecture on the cost of rearrangements (2003).
+\newblock \href {https://arxiv.org/abs/math/0302228}
+  {\path{arXiv:math/0302228}}.
+
+\bibitem{CrippaDeLellis}
+G.~Crippa, C.~De~Lellis, Estimates and regularity results for the
+  {DiPerna--Lions} flow, Journal f{\"u}r die reine und angewandte Mathematik
+  616 (2008) 15--46.
+\newblock \href {https://doi.org/10.1515/CRELLE.2008.016}
+  {\path{doi:10.1515/CRELLE.2008.016}}.
+
+\bibitem{Seis}
+C.~Seis, Maximal mixing by incompressible fluid flows, Nonlinearity 26~(12)
+  (2013) 3279--3289.
+\newblock \href {https://doi.org/10.1088/0951-7715/26/12/3279}
+  {\path{doi:10.1088/0951-7715/26/12/3279}}.
+
+\bibitem{Leger}
+F.~L{\'e}ger, A new approach to bounds on mixing, Mathematical Models and
+  Methods in Applied Sciences 28 (2018) 829--849.
+\newblock \href {https://arxiv.org/abs/1604.00907} {\path{arXiv:1604.00907}}.
+
+\bibitem{ACDM}
+L.~Ambrosio, A.~Coscia, G.~Dal~Maso, Fine properties of functions with bounded
+  deformation, Archive for Rational Mechanics and Analysis 139 (1997) 201--238.
+\newblock \href {https://doi.org/10.1007/s002050050051}
+  {\path{doi:10.1007/s002050050051}}.
+
+\bibitem{Inversi}
+M.~Inversi, Fine dissipative properties of {Euler} solutions with measure first
+  derivatives, version 4, 18 May 2026; first version 2025 (2026).
+\newblock \href {https://arxiv.org/abs/2510.10704v4}
+  {\path{arXiv:2510.10704v4}}.
+
+\bibitem{BianchiniBonicatto}
+S.~Bianchini, P.~Bonicatto, \href{https://cvgmt.sns.it/paper/3619/}{A
+  uniqueness result for the decomposition of vector fields in {$\mathbb R^d$}},
+  Inventiones Mathematicae 220 (2020) 255--393.
+\newline\urlprefix\url{https://cvgmt.sns.it/paper/3619/}
+
+\bibitem{BianchiniDeNitti}
+S.~Bianchini, N.~De~Nitti, Differentiability in measure of the flow associated
+  with a nearly incompressible {BV} vector field, Archive for Rational
+  Mechanics and Analysis 246 (2022) 659--734.
+\newblock \href {https://doi.org/10.1007/s00205-022-01820-1}
+  {\path{doi:10.1007/s00205-022-01820-1}}.
+
+\bibitem{OpenProblems2026}
+B.~Albach, J.-F. Barraud, M.~Bialy, J.~Bimmermann, A.~Ch{\'a}vez~C{\'a}liz,
+  M.~Damian, L.~Deschamps, U.~Hryniewicz, V.~Humili{\`e}re, B.~Khesin,
+  L.~Maier, A.~Moreno, A.~Oancea, O.~Paris-Romaskevich, A.~Sorrentino,
+  S.~Tabachnikov, Open problems in billiards and quantitative symplectic
+  geometry, version 1 (2026).
+\newblock \href {https://arxiv.org/abs/2602.12896v1}
+  {\path{arXiv:2602.12896v1}}.
+
+\bibitem{BialyPolterovich}
+M.~Bialy, L.~Polterovich, Hopf-type rigidity for {Newton} equations,
+  Mathematical Research Letters 2~(6) (1995) 695--700.
+\newblock \href {https://doi.org/10.4310/MRL.1995.v2.n6.a3}
+  {\path{doi:10.4310/MRL.1995.v2.n6.a3}}.
+
+\bibitem{BialyInfinity}
+M.~Bialy, On {Newton} equations which are totally integrable at infinity,
+  Calculus of Variations and Partial Differential Equations 55~(3) (2016) 51.
+\newblock \href {https://doi.org/10.1007/s00526-016-0985-8}
+  {\path{doi:10.1007/s00526-016-0985-8}}.
+
+\bibitem{Teschl}
+G.~Teschl, \href{https://www.mat.univie.ac.at/~gerald/ftp/book-ode/}{Ordinary
+  Differential Equations and Dynamical Systems}, Vol. 140 of Graduate Studies
+  in Mathematics, American Mathematical Society, 2012.
+\newline\urlprefix\url{https://www.mat.univie.ac.at/~gerald/ftp/book-ode/}
+
+\bibitem{Walters}
+P.~Walters, \href{https://link.springer.com/book/9780387951522}{An Introduction
+  to Ergodic Theory}, Vol.~79 of Graduate Texts in Mathematics, Springer, 1982.
+\newline\urlprefix\url{https://link.springer.com/book/9780387951522}
+
+\bibitem{KatokHasselblatt}
+A.~Katok, B.~Hasselblatt, Introduction to the Modern Theory of Dynamical
+  Systems, Vol.~54 of Encyclopedia of Mathematics and its Applications,
+  Cambridge University Press, 1995.
+\newblock \href {https://doi.org/10.1017/CBO9780511809187}
+  {\path{doi:10.1017/CBO9780511809187}}.
+
+\bibitem{SackerSell}
+R.~J. Sacker, G.~R. Sell, A spectral theory for linear differential systems,
+  Journal of Differential Equations 27 (1978) 320--358.
+\newblock \href {https://doi.org/10.1016/0022-0396(78)90057-8}
+  {\path{doi:10.1016/0022-0396(78)90057-8}}.
+
+\bibitem{DoanPalmerRasmussen}
+T.~S. Doan, K.~J. Palmer, M.~Rasmussen, The {Bohl} spectrum for linear
+  nonautonomous differential equations, Journal of Dynamics and Differential
+  Equations 29 (2017) 1459--1485.
+\newblock \href {https://doi.org/10.1007/s10884-016-9530-x}
+  {\path{doi:10.1007/s10884-016-9530-x}}.
+
+\bibitem{Carr}
+J.~Carr, Applications of Centre Manifold Theory, Vol.~35 of Applied
+  Mathematical Sciences, Springer, 1981.
+\newblock \href {https://doi.org/10.1007/978-1-4612-5929-9}
+  {\path{doi:10.1007/978-1-4612-5929-9}}.
+
+\bibitem{Fenichel}
+N.~Fenichel, Geometric singular perturbation theory for ordinary differential
+  equations, Journal of Differential Equations 31 (1979) 53--98.
+\newblock \href {https://doi.org/10.1016/0022-0396(79)90152-9}
+  {\path{doi:10.1016/0022-0396(79)90152-9}}.
+
+\bibitem{Conley}
+C.~Conley, Isolated Invariant Sets and the Morse Index, Vol.~38 of CBMS
+  Regional Conference Series in Mathematics, American Mathematical Society,
+  1978.
+
+\bibitem{JohanssonMescolini}
+C.~J.~P. Johansson, G.~Mescolini, Topological entropy is generically infinite
+  for non-{Lipschitz} velocity fields, version 2 (2026).
+\newblock \href {https://arxiv.org/abs/2604.01077v2}
+  {\path{arXiv:2604.01077v2}}.
+
+\bibitem{Ruelle}
+D.~Ruelle, An inequality for the entropy of differentiable maps, Boletim da
+  Sociedade Brasileira de Matem{\'a}tica 9 (1978) 83--87.
+\newblock \href {https://doi.org/10.1007/BF02584795}
+  {\path{doi:10.1007/BF02584795}}.
+
+\bibitem{EvansGariepy}
+L.~C. Evans, R.~F. Gariepy, Measure Theory and Fine Properties of Functions,
+  revised Edition, CRC Press, 2015.
+
+\bibitem{BCDPJ}
+E.~Bru{\'e}, M.~Colombo, G.~De~Philippis, C.~J.~P. Johansson, Regularity
+  estimates in transport equations via heat flow and quantitative
+  differentiation, version 1 (2026).
+\newblock \href {https://arxiv.org/abs/2607.13751v1}
+  {\path{arXiv:2607.13751v1}}.
+
+\bibitem{Ornstein}
+D.~Ornstein, A non-inequality for differential operators in the {$L^1$} norm,
+  Archive for Rational Mechanics and Analysis 11 (1962) 40--49.
+\newblock \href {https://doi.org/10.1007/BF00253928}
+  {\path{doi:10.1007/BF00253928}}.
+
+\bibitem{Huang}
+Y.~C. Huang, On a rigidity theorem of {M. Bialy} in dimension two, Calculus of
+  Variations and Partial Differential Equations 64 (2025) 244.
+\newblock \href {https://doi.org/10.1007/s00526-025-03130-2}
+  {\path{doi:10.1007/s00526-025-03130-2}}.
+
+\bibitem{BialyBenney}
+M.~Bialy, On periodic solutions for a reduction of {Benney} chain, Nonlinear
+  Differential Equations and Applications NoDEA 16~(6) (2009) 731--743.
+\newblock \href {https://doi.org/10.1007/s00030-009-0032-y}
+  {\path{doi:10.1007/s00030-009-0032-y}}.
+
+\end{thebibliography}
+\endgroup
+% END EMBEDDED BIBLIOGRAPHY
+\end{document}
