@@ -48,4 +48,4 @@ The bibliography is currently embedded in `main.tex`; edits to `references.bib` 
 
 ## Citation and authorship
 
-Author names, affiliations, and corresponding-author details must be completed in the `frontmatter` section of `main.tex` before submission. There is no assigned DOI, publication date, or journal volume for this working manuscript. No license is asserted for reuse or redistribution.
+There is no assigned DOI, publication date, or journal volume for this working manuscript. No license is asserted for reuse or redistribution.
